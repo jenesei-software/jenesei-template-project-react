@@ -1,6 +1,6 @@
 import { styled } from 'styled-components'
 
-export const LayoutUserWrapper = styled.div`
+export const LayoutPrivateWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: flex-start;

@@ -1,5 +1,7 @@
+import { Service } from '@jenesei-software/jenesei-ui-react'
+
 export type LayoutRootRouteSearch = {
-  pastResource?: 'jenesei_id'
+  pastResource?: Service
 }
 export const validateLayoutRootRouteSearch = (
   search: Record<keyof LayoutRootRouteSearch, unknown>

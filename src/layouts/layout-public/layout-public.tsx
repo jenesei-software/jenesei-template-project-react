@@ -1,8 +1,8 @@
 import { AuthLayout, useApp } from '@jenesei-software/jenesei-ui-react'
-import { Navigate, Outlet } from '@tanstack/react-router'
+import { Outlet } from '@tanstack/react-router'
 import { useEffect } from 'react'
 
-export function LayoutAuthorization() {
+export function LayoutPublic() {
   const { changePreview } = useApp()
 
   useEffect(() => {
@@ -14,8 +14,4 @@ export function LayoutAuthorization() {
       <Outlet />
     </AuthLayout>
   )
-}
-
-export function LayoutAuthorizationNotFound() {
-  return <Navigate to="/auth" />
 }

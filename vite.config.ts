@@ -5,6 +5,7 @@ import { defineConfig, loadEnv } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig(({ mode }) => {
+  // eslint-disable-next-line no-undef
   const env = loadEnv(mode, process.cwd())
 
   const VITE_DEFAULT_NAME = env.VITE_DEFAULT_NAME || 'Default App Name'
@@ -15,24 +16,16 @@ export default defineConfig(({ mode }) => {
   return {
     server: {
       host: 'local.dev.jenesei.ru',
-      port: 3000,
+      port: 2000
     },
     build: {
-      outDir: 'build',
+      outDir: 'build'
     },
     resolve: {
       alias: {
-        '@api': path.resolve(__dirname, './src/api'),
-        '@assets': path.resolve(__dirname, './src/assets'),
-        '@components': path.resolve(__dirname, './src/components'),
-        '@core': path.resolve(__dirname, './src/core'),
-        '@functions': path.resolve(__dirname, './src/functions'),
-        '@hooks': path.resolve(__dirname, './src/hooks'),
-        '@layouts': path.resolve(__dirname, './src/layouts'),
-        '@pages': path.resolve(__dirname, './src/pages'),
-        '@providers': path.resolve(__dirname, './src/providers'),
-        '@styles': path.resolve(__dirname, './src/styles'),
-      },
+        // eslint-disable-next-line no-undef
+        '@local': path.resolve(__dirname, './src')
+      }
     },
     plugins: [
       react(),
@@ -42,7 +35,7 @@ export default defineConfig(({ mode }) => {
         registerType: 'autoUpdate',
         devOptions: {
           enabled: true,
-          type: 'module',
+          type: 'module'
         },
         workbox: {
           runtimeCaching: [
@@ -53,11 +46,11 @@ export default defineConfig(({ mode }) => {
                 cacheName: 'images-cache',
                 expiration: {
                   maxEntries: 50,
-                  maxAgeSeconds: 7 * 24 * 60 * 60, // 7 days
-                },
-              },
-            },
-          ],
+                  maxAgeSeconds: 7 * 24 * 60 * 60 // 7 days
+                }
+              }
+            }
+          ]
         },
         manifest: {
           display: 'standalone',
@@ -73,41 +66,41 @@ export default defineConfig(({ mode }) => {
               src: 'icons/icon-64x64.ico',
               sizes: '64x64',
               type: 'image/x-icon',
-              purpose: 'any',
+              purpose: 'any'
             },
             {
               src: 'icons/icon-192x192.png',
               sizes: '192x192',
               type: 'image/png',
-              purpose: 'any',
+              purpose: 'any'
             },
             {
               src: 'icons/icon-256x256.png',
               sizes: '256x256',
               type: 'image/png',
-              purpose: 'any',
+              purpose: 'any'
             },
             {
               src: 'icons/icon-384x384.png',
               sizes: '384x384',
               type: 'image/png',
-              purpose: 'any',
+              purpose: 'any'
             },
             {
               src: 'icons/icon-512x512.png',
               sizes: '512x512',
               type: 'image/png',
-              purpose: 'any',
+              purpose: 'any'
             },
             {
               src: 'icons/icon-180x180.png',
               sizes: '180x180',
               type: 'image/png',
-              purpose: 'any',
-            },
-          ],
-        },
-      }),
-    ],
+              purpose: 'any'
+            }
+          ]
+        }
+      })
+    ]
   }
 })
