@@ -3,8 +3,8 @@ import i18n from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import { initReactI18next } from 'react-i18next'
 
-import en from './eng.json'
-import ru from './ru.json'
+import en from '../../../public/locales/en.json'
+import ru from '../../../public/locales/ru.json'
 
 const mode = import.meta.env.VITE_NODE_ENV
 

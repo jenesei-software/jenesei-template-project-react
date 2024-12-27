@@ -2,7 +2,7 @@ import { ILanguageKeys, useCookie } from '@jenesei-software/jenesei-ui-react'
 import { FC, createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { I18nextProvider } from 'react-i18next'
 
-import { browserLng, fallbackLng, i18n, supportedLngs } from '@local/assets/i18n'
+import { browserLng, fallbackLng, i18n, supportedLngs } from '@local/core/i18n'
 
 import { LanguageContextProps, ProviderLanguageProps } from '.'
 
