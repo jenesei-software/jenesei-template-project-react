@@ -17,7 +17,7 @@
     "@emotion/styled": "^11.14.0",
     "@fontsource/inter": "^5.0.16",
     "@fontsource/roboto": "^5.0.14",
-    "@jenesei-software/jenesei-ui-react": "^0.4.103",
+    "@jenesei-software/jenesei-ui-react": "^0.4.105",
     "@tanstack/react-query": "^5.62.10",
     "@tanstack/react-router": "^1.92.3",
     "@tanstack/react-store": "^0.6.1",

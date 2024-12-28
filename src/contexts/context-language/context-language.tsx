@@ -1,5 +1,5 @@
 import { ILanguageKeys, useApp, useLocalStorage } from '@jenesei-software/jenesei-ui-react'
-import { FC, createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { FC, Suspense, createContext, useCallback, useContext, useMemo, useState } from 'react'
 import { I18nextProvider, useTranslation } from 'react-i18next'
 
 import { browserLng, fallbackLng, supportedLngs } from '@local/core/i18n'
@@ -17,6 +17,17 @@ export const useLanguage = () => {
 }
 
 export const ProviderLanguage: FC<ProviderLanguageProps> = props => {
+  const { i18n } = useTranslation()
+  return (
+    <I18nextProvider i18n={i18n}>
+      <Suspense fallback={<div>Loading...</div>}>
+        <ProviderLanguageChildren {...props} />
+      </Suspense>
+    </I18nextProvider>
+  )
+}
+
+const ProviderLanguageChildren: FC<ProviderLanguageProps> = props => {
   const { setLocalStorage } = useLocalStorage()
   const { i18n } = useTranslation()
 
@@ -44,19 +55,17 @@ export const ProviderLanguage: FC<ProviderLanguageProps> = props => {
   const localBrowserLng = useMemo(() => browserLng, [])
 
   return (
-    <I18nextProvider i18n={i18n}>
-      <LanguageContext.Provider
-        value={{
-          fallbackLng: localFallbackLng,
-          supportedLngs: localSupportedLngs,
-          browserLng: localBrowserLng,
-          lng,
-          isError,
-          changeLng
-        }}
-      >
-        {props.children}
-      </LanguageContext.Provider>
-    </I18nextProvider>
+    <LanguageContext.Provider
+      value={{
+        fallbackLng: localFallbackLng,
+        supportedLngs: localSupportedLngs,
+        browserLng: localBrowserLng,
+        lng,
+        isError,
+        changeLng
+      }}
+    >
+      {props.children}
+    </LanguageContext.Provider>
   )
 }
