@@ -8,5 +8,6 @@ export interface LanguageContextProps {
   fallbackLng: ILanguageKeys
   supportedLngs: ILanguageKeys[]
   browserLng: string
+  isError: boolean
   changeLng: (lng: ILanguageKeys) => void
 }

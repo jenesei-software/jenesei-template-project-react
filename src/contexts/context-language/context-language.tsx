@@ -1,8 +1,8 @@
-import { ILanguageKeys, useCookie } from '@jenesei-software/jenesei-ui-react'
+import { ILanguageKeys, useApp, useLocalStorage } from '@jenesei-software/jenesei-ui-react'
 import { FC, createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { I18nextProvider } from 'react-i18next'
+import { I18nextProvider, useTranslation } from 'react-i18next'
 
-import { browserLng, fallbackLng, i18n, supportedLngs } from '@local/core/i18n'
+import { browserLng, fallbackLng, supportedLngs } from '@local/core/i18n'
 
 import { LanguageContextProps, ProviderLanguageProps } from '.'
 
@@ -17,26 +17,31 @@ export const useLanguage = () => {
 }
 
 export const ProviderLanguage: FC<ProviderLanguageProps> = props => {
-  const { setCookie } = useCookie()
+  const { setLocalStorage } = useLocalStorage()
+  const { i18n } = useTranslation()
+
+  const [isError, setIsError] = useState(false)
 
   const changeLng: LanguageContextProps['changeLng'] = useCallback(
     lng => {
-      i18n.changeLanguage(lng)
-      setCookie('lng', lng)
-      setLocalLng(lng)
+      i18n
+        .changeLanguage(lng)
+        .then(() => {
+          setLocalStorage('i18nextLng', lng)
+          setIsError(false)
+        })
+        .catch(() => {
+          setLocalStorage('i18nextLng', fallbackLng)
+          setIsError(true)
+        })
     },
-    [setCookie]
+    [i18n, setLocalStorage]
   )
-  const lng = useMemo(() => i18n.language as ILanguageKeys, [])
-  const [localLng, setLocalLng] = useState<ILanguageKeys>(lng)
 
+  const lng = useMemo(() => i18n.language as ILanguageKeys, [i18n.language])
   const localFallbackLng = useMemo(() => fallbackLng, [])
   const localSupportedLngs = useMemo(() => supportedLngs, [])
   const localBrowserLng = useMemo(() => browserLng, [])
-
-  useEffect(() => {
-    setLocalLng(lng)
-  }, [lng])
 
   return (
     <I18nextProvider i18n={i18n}>
@@ -45,7 +50,8 @@ export const ProviderLanguage: FC<ProviderLanguageProps> = props => {
           fallbackLng: localFallbackLng,
           supportedLngs: localSupportedLngs,
           browserLng: localBrowserLng,
-          lng: localLng,
+          lng,
+          isError,
           changeLng
         }}
       >

@@ -8,7 +8,7 @@ export default {
   arrowParens: 'avoid',
   endOfLine: 'auto',
   plugins: ['@trivago/prettier-plugin-sort-imports'],
-  importOrder: ['<THIRD_PARTY_MODULES>', '^@local/(.*)$', '^[./]', '.css'],
+  importOrder: ['<THIRD_PARTY_MODULES>', '^@local/(.*)$', '^@public/(.*)$', '^[./]', '.css'],
   importOrderSeparation: true,
   importOrderSortSpecifiers: true
 }

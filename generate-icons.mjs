@@ -17,10 +17,10 @@ if (!fs.existsSync(outputDir)) {
   fs.mkdirSync(outputDir, { recursive: true })
 }
 
-sizes.forEach((size) => {
+sizes.forEach(size => {
   sharp(inputFile)
     .resize(size, size)
-    .toFile(path.join(outputDir, `icon-${size}x${size}.png`), (err) => {
+    .toFile(path.join(outputDir, `icon-${size}x${size}.png`), err => {
       if (err) {
         console.error(`Error generating icon ${size}x${size}:`, err)
       } else {
@@ -32,7 +32,7 @@ sizes.forEach((size) => {
 sharp(inputFile)
   .resize(180, 180)
   .flatten({ background: { r: 255, g: 255, b: 255, alpha: 1 } })
-  .toFile(whiteBackgroundIconPath, (err) => {
+  .toFile(whiteBackgroundIconPath, err => {
     if (err) {
       console.error('Error generating icon with white background:', err)
     } else {
@@ -42,7 +42,7 @@ sharp(inputFile)
 
 sharp(inputFile)
   .resize(64, 64)
-  .toFile(faviconPath, (err) => {
+  .toFile(faviconPath, err => {
     if (err) {
       console.error('Error generating favicon:', err)
     } else {

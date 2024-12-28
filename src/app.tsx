@@ -2,18 +2,17 @@ import {
   JeneseiGlobalStyles,
   JeneseiTheme,
   ProviderCookie,
+  ProviderLocalStorage,
   ProviderPermission,
   ProviderScreenWidth,
   useRemovePreviewLoader
 } from '@jenesei-software/jenesei-ui-react'
 import { QueryClientProvider } from '@tanstack/react-query'
-import { I18nextProvider } from 'react-i18next'
 import { ThemeProvider } from 'styled-components'
 
-import { ProviderLanguage } from '@local/contexts/context-language'
-import { i18n } from '@local/core/i18n'
 import { queryClient } from '@local/core/query'
 import { getValidateCookieValue, validateCookieKeys } from '@local/functions/validate-cookie-value'
+import { getValidateLocalStorageValue, validateLocalStorageKeys } from '@local/functions/validate-local-storage-value'
 import { LayoutRouter } from '@local/layouts/layout-router'
 
 import '@fontsource/inter/100.css'
@@ -38,27 +37,30 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <I18nextProvider i18n={i18n}>
-        <ThemeProvider theme={JeneseiTheme}>
-          <JeneseiGlobalStyles />
-          <ProviderScreenWidth>
-            {/* <ProviderAxiosWebId coreURL={coreURL} baseURL={baseURL} availabilityCookieName={availabilityCookieName}> */}
-            <ProviderCookie
+      <ThemeProvider theme={JeneseiTheme}>
+        <JeneseiGlobalStyles />
+        <ProviderScreenWidth>
+          {/* <ProviderAxiosWebId coreURL={coreURL} baseURL={baseURL} availabilityCookieName={availabilityCookieName}> */}
+          <ProviderCookie
+            validate={{
+              validateKeys: validateCookieKeys,
+              getValidateCookieValue
+            }}
+          >
+            <ProviderLocalStorage
               validate={{
-                validateKeys: validateCookieKeys,
-                getValidateCookieValue
+                validateKeys: validateLocalStorageKeys,
+                getValidateLocalStorageValue
               }}
             >
-              <ProviderLanguage>
-                <ProviderPermission serviceWorkerPath="/service-worker.js">
-                  <LayoutRouter />
-                </ProviderPermission>
-              </ProviderLanguage>
-            </ProviderCookie>
-            {/* </ProviderAxiosWebId> */}
-          </ProviderScreenWidth>
-        </ThemeProvider>
-      </I18nextProvider>
+              <ProviderPermission serviceWorkerPath="/service-worker.js">
+                <LayoutRouter />
+              </ProviderPermission>
+            </ProviderLocalStorage>
+          </ProviderCookie>
+          {/* </ProviderAxiosWebId> */}
+        </ProviderScreenWidth>
+      </ThemeProvider>
     </QueryClientProvider>
   )
 }

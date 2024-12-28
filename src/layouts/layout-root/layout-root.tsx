@@ -3,13 +3,14 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 
+import { ProviderLanguage } from '@local/contexts/context-language'
 import { useEnvironment } from '@local/hooks/use-environment'
 
 export function LayoutRoot() {
   const { title, description, mode } = useEnvironment()
 
   return (
-    <>
+    <ProviderLanguage>
       <ProviderApp
         defaultTitle={title}
         defaultBgColor="whiteStandard"
@@ -25,6 +26,6 @@ export function LayoutRoot() {
           <TanStackRouterDevtools position="bottom-right" />
         </>
       )}
-    </>
+    </ProviderLanguage>
   )
 }

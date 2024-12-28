@@ -1,6 +1,6 @@
-import { ILanguageKeys, KeysLanguage, ValidCookieObject } from '@jenesei-software/jenesei-ui-react'
+import { ValidCookieObject } from '@jenesei-software/jenesei-ui-react'
 
-export const validateCookieKeys: (keyof ValidCookieObject)[] = ['auth_status', 'lng']
+export const validateCookieKeys: (keyof ValidCookieObject)[] = ['auth_status']
 
 export function getValidateCookieValue<K extends keyof ValidCookieObject>(
   key: K,
@@ -9,8 +9,6 @@ export function getValidateCookieValue<K extends keyof ValidCookieObject>(
   switch (key) {
     case 'auth_status':
       return typeof value === 'boolean'
-    case 'lng':
-      return Object.values(KeysLanguage).includes(value as ILanguageKeys)
     default:
       return true
   }

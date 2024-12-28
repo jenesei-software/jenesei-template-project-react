@@ -5,7 +5,9 @@ import 'styled-components'
 declare module '@jenesei-software/jenesei-ui-react' {
   export interface ValidCookieObject {
     auth_status: boolean
-    lng: ILanguageKeys
+  }
+  export interface ValidLocalStorageObject {
+    i18nextLng: ILanguageKeys
   }
 }
 
