@@ -1,4 +1,4 @@
-import { ProviderApp } from '@jenesei-software/jenesei-ui-react'
+import { ProviderApp, Typography } from '@jenesei-software/jenesei-ui-react'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/router-devtools'
@@ -10,7 +10,7 @@ export function LayoutRoot() {
   const { title, description, mode } = useEnvironment()
 
   return (
-    <ProviderLanguage>
+    <>
       <ProviderApp
         defaultTitle={title}
         defaultBgColor="whiteStandard"
@@ -18,7 +18,9 @@ export function LayoutRoot() {
         defaultDescription={description}
         isScrollOutlet={true}
       >
-        <Outlet />
+        <ProviderLanguage>
+          <Outlet />
+        </ProviderLanguage>
       </ProviderApp>
       {(mode === 'dev' || mode == 'test') && (
         <>
@@ -26,6 +28,6 @@ export function LayoutRoot() {
           <TanStackRouterDevtools position="bottom-right" />
         </>
       )}
-    </ProviderLanguage>
+    </>
   )
 }

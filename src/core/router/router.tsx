@@ -19,18 +19,16 @@ export interface IContext {
 export const LayoutRootRoute = createRootRouteWithContext<IContext>()({
   component: LayoutRoot,
   validateSearch: validateLayoutRootRouteSearch,
-  notFoundComponent: () => <Navigate to="/" />
+  notFoundComponent: () => <Navigate to="/public" />
 })
 
-export const RootRoute = createRoute({
+export const LayoutPrivateRoute = createRoute({
   getParentRoute: () => LayoutRootRoute,
-  path: '/',
+  component: LayoutPrivate,
+  notFoundComponent: () => <Navigate to="/private/home" />,
+  path: '/private',
   beforeLoad: ({ context }) => {
-    if (context.auth.isAuthenticated) {
-      throw redirect({
-        to: '/private'
-      })
-    } else {
+    if (!context.auth.isAuthenticated) {
       throw redirect({
         to: '/public'
       })
@@ -38,18 +36,18 @@ export const RootRoute = createRoute({
   }
 })
 
-export const LayoutPrivateRoute = createRoute({
-  getParentRoute: () => LayoutRootRoute,
-  component: LayoutPrivate,
-  notFoundComponent: () => <Navigate to="/private/home" />,
-  path: '/private'
-})
-
 export const LayoutPublicRoute = createRoute({
   getParentRoute: () => LayoutRootRoute,
   component: LayoutPublic,
   notFoundComponent: () => <Navigate to="/public/home" />,
-  path: '/public'
+  path: '/public',
+  beforeLoad: ({ context }) => {
+    if (context.auth.isAuthenticated) {
+      throw redirect({
+        to: '/private'
+      })
+    }
+  }
 })
 
 export const PagePrivateHomeRoute = createRoute({
@@ -65,7 +63,6 @@ export const PagePagePublicHome = createRoute({
 })
 
 const routeTree = LayoutRootRoute.addChildren({
-  RootRoute,
   LayoutPublicRoute: LayoutPublicRoute.addChildren({
     PagePagePublicHome
   }),

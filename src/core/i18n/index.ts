@@ -6,6 +6,8 @@ import HttpApi from 'i18next-http-backend'
 import LocalStorageBackend from 'i18next-localstorage-backend'
 import { initReactI18next } from 'react-i18next'
 
+import { secondsIn7Days } from '@local/constants'
+
 const mode = import.meta.env.VITE_NODE_ENV
 
 export const defaultNS: INameSpace = 'translation'
@@ -31,7 +33,7 @@ i18n
       backendOptions: [
         {
           prefix: 'i18next_res_',
-          expirationTime: 7 * 24 * 60 * 60 // 7 days
+          expirationTime: secondsIn7Days
         }
       ],
       loadPath: '/locales/{{lng}}/{{ns}}.json'
