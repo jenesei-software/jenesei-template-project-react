@@ -1,4 +1,3 @@
-import { ValidCookieObject } from '@jenesei-software/jenesei-ui-react'
 import { QueryClient } from '@tanstack/react-query'
 import { Navigate, createRootRouteWithContext, createRoute, createRouter, redirect } from '@tanstack/react-router'
 
@@ -12,41 +11,59 @@ import { validateLayoutRootRouteSearch } from '.'
 
 export interface IContext {
   queryClient: QueryClient
-  cookieValues: ValidCookieObject
-  auth: { isAuthenticated: boolean }
+  auth: { isAuthenticated: boolean | undefined }
 }
 
 export const LayoutRootRoute = createRootRouteWithContext<IContext>()({
   component: LayoutRoot,
   validateSearch: validateLayoutRootRouteSearch,
-  notFoundComponent: () => <Navigate to="/public" />
+  notFoundComponent: () => <Navigate to="/pu" />,
+  beforeLoad: props => {
+    const isPublic = !!props.matches.find(match => match.id === '/pu')
+    const isPrivate = !!props.matches.find(match => match.id === '/pr')
+
+    const isAuthenticated = props.context.auth.isAuthenticated
+
+    if (isAuthenticated !== undefined)
+      if (isAuthenticated) {
+        if (isPublic)
+          throw redirect({
+            to: '/pr'
+          })
+      } else {
+        if (isPrivate)
+          throw redirect({
+            to: '/pu'
+          })
+      }
+  }
 })
 
 export const LayoutPrivateRoute = createRoute({
   getParentRoute: () => LayoutRootRoute,
   component: LayoutPrivate,
-  notFoundComponent: () => <Navigate to="/private/home" />,
-  path: '/private',
-  beforeLoad: ({ context }) => {
-    if (!context.auth.isAuthenticated) {
+  notFoundComponent: () => <Navigate to="/pr/home" />,
+  path: '/pr',
+  beforeLoad: props => {
+    const isFirst = props.location.pathname == '/pr'
+    if (isFirst)
       throw redirect({
-        to: '/public'
+        to: '/pr/home'
       })
-    }
   }
 })
 
 export const LayoutPublicRoute = createRoute({
   getParentRoute: () => LayoutRootRoute,
   component: LayoutPublic,
-  notFoundComponent: () => <Navigate to="/public/home" />,
-  path: '/public',
-  beforeLoad: ({ context }) => {
-    if (context.auth.isAuthenticated) {
+  notFoundComponent: () => <Navigate to="/pu/home" />,
+  path: 'pu',
+  beforeLoad: props => {
+    const isFirst = props.location.pathname == '/pu'
+    if (isFirst)
       throw redirect({
-        to: '/private'
+        to: '/pu/home'
       })
-    }
   }
 })
 
@@ -75,7 +92,6 @@ export const router = createRouter({
   routeTree: routeTree,
   context: {
     queryClient: undefined!,
-    cookieValues: undefined!,
     auth: undefined!
   },
   defaultPreload: 'intent',

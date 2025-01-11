@@ -4,9 +4,9 @@ import {
   ProviderCookie,
   ProviderLocalStorage,
   ProviderPermission,
-  ProviderScreenWidth,
-  useRemovePreviewLoader
+  ProviderScreenWidth
 } from '@jenesei-software/jenesei-ui-react'
+import { ProviderAxiosWebId } from '@jenesei-software/jenesei-web-id-api'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { ThemeProvider } from 'styled-components'
 
@@ -28,37 +28,35 @@ import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 import '@fontsource/roboto/900.css'
 
-// const baseURL = import.meta.env.VITE_BASE_URL || ''
-// const coreURL = import.meta.env.VITE_CORE_URL || ''
-// const availabilityCookieName = import.meta.env.VITE_AVAILABILITY_COOKIE_NAME || ''
+const baseURL = import.meta.env.VITE_BASE_URL || ''
+const coreURL = import.meta.env.VITE_CORE_URL || ''
+const availabilityCookieName = import.meta.env.VITE_AVAILABILITY_COOKIE_NAME || ''
 
 function App() {
-  useRemovePreviewLoader()
-
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={JeneseiTheme}>
         <JeneseiGlobalStyles />
         <ProviderScreenWidth>
-          {/* <ProviderAxiosWebId coreURL={coreURL} baseURL={baseURL} availabilityCookieName={availabilityCookieName}> */}
-          <ProviderCookie
-            validate={{
-              validateKeys: validateCookieKeys,
-              getValidateCookieValue
-            }}
-          >
-            <ProviderLocalStorage
+          <ProviderAxiosWebId coreURL={coreURL} baseURL={baseURL} availabilityCookieName={availabilityCookieName}>
+            <ProviderCookie
               validate={{
-                validateKeys: validateLocalStorageKeys,
-                getValidateLocalStorageValue
+                validateKeys: validateCookieKeys,
+                getValidateCookieValue
               }}
             >
-              <ProviderPermission serviceWorkerPath="/service-worker.js">
-                <LayoutRouter />
-              </ProviderPermission>
-            </ProviderLocalStorage>
-          </ProviderCookie>
-          {/* </ProviderAxiosWebId> */}
+              <ProviderLocalStorage
+                validate={{
+                  validateKeys: validateLocalStorageKeys,
+                  getValidateLocalStorageValue
+                }}
+              >
+                <ProviderPermission serviceWorkerPath="/service-worker.js">
+                  <LayoutRouter />
+                </ProviderPermission>
+              </ProviderLocalStorage>
+            </ProviderCookie>
+          </ProviderAxiosWebId>
         </ProviderScreenWidth>
       </ThemeProvider>
     </QueryClientProvider>

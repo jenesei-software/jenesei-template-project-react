@@ -1,11 +1,5 @@
-import {
-  ILanguageKeys,
-  Typography,
-  setToLocalStorage,
-  useApp,
-  useLocalStorage
-} from '@jenesei-software/jenesei-ui-react'
-import { FC, createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { ILanguageKeys, Typography, useApp } from '@jenesei-software/jenesei-ui-react'
+import { FC, createContext, useCallback, useContext, useMemo, useState } from 'react'
 import { I18nextProvider, useTranslation } from 'react-i18next'
 
 import { browserLng, fallbackLng, supportedLngs } from '@local/core/i18n'
