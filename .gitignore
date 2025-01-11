@@ -13,6 +13,7 @@ dist
 dist-ssr
 dev-dist
 *.local
+dev-dist/*
 
 # Editor directories and files
 .vscode/*
@@ -25,3 +26,5 @@ dev-dist
 *.sln
 *.sw?
 *.npmrc
+/dev-dist
+/dist
