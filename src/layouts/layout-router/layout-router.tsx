@@ -1,4 +1,4 @@
-import { useGetSSOAuthProfile } from '@jenesei-software/jenesei-web-id-api'
+import { useGetSSOAuthProfile } from '@jenesei-software/jenesei-id-web-api'
 import { RouterProvider } from '@tanstack/react-router'
 import { useEffect, useMemo } from 'react'
 

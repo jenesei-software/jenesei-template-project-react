@@ -6,7 +6,7 @@ import {
   ProviderPermission,
   ProviderScreenWidth
 } from '@jenesei-software/jenesei-ui-react'
-import { ProviderAxiosWebId } from '@jenesei-software/jenesei-web-id-api'
+import { ProviderAxiosWebId } from '@jenesei-software/jenesei-id-web-api'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { ThemeProvider } from 'styled-components'
 
