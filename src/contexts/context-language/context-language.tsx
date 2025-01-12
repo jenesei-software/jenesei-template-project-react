@@ -1,4 +1,4 @@
-import { ILanguageKeys, Typography, useApp } from '@jenesei-software/jenesei-ui-react'
+import { ILanguageKeys } from '@jenesei-software/jenesei-ui-react'
 import { FC, createContext, useCallback, useContext, useMemo, useState } from 'react'
 import { I18nextProvider, useTranslation } from 'react-i18next'
 
@@ -18,19 +18,18 @@ export const useLanguage = () => {
 
 export const ProviderLanguage: FC<ProviderLanguageProps> = props => {
   const { i18n } = useTranslation()
-  const { changePreview } = useApp()
   const [isError, setIsError] = useState(false)
 
   const changeLng: LanguageContextProps['changeLng'] = useCallback(
     lng => {
-      changePreview({
-        visible: true,
-        content: (
-          <Typography variant="h7" weight={500}>
-            Loading language...
-          </Typography>
-        )
-      })
+      // changePreview({
+      //   visible: true,
+      //   content: (
+      //     <Typography variant="h7" weight={500}>
+      //       Loading language...
+      //     </Typography>
+      //   )
+      // })
       i18n
         .changeLanguage(lng)
         .then(() => {
@@ -40,12 +39,12 @@ export const ProviderLanguage: FC<ProviderLanguageProps> = props => {
           setIsError(true)
         })
         .finally(() => {
-          changePreview({
-            visible: false
-          })
+          // changePreview({
+          //   visible: false
+          // })
         })
     },
-    [changePreview, i18n]
+    [i18n]
   )
 
   const lng = useMemo(() => i18n.language as ILanguageKeys, [i18n.language])

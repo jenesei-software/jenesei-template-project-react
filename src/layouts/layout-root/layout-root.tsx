@@ -1,5 +1,5 @@
-import { ProviderApp, useRemovePreviewLoader } from '@jenesei-software/jenesei-ui-react'
 import { useGetSSOAuthProfile } from '@jenesei-software/jenesei-id-web-api'
+import { ProviderApp, useRemovePreviewLoader } from '@jenesei-software/jenesei-ui-react'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/router-devtools'
@@ -19,18 +19,18 @@ export function LayoutRoot() {
 
   return (
     <>
-      <ProviderApp
-        defaultPreview={{ visible: visible }}
-        defaultTitle={title}
-        defaultBgColor="whiteStandard"
-        defaultStatusBarColor="whiteStandard"
-        defaultDescription={description}
-        isScrollOutlet={true}
-      >
-        <ProviderLanguage>
+      <ProviderLanguage>
+        <ProviderApp
+          defaultPreview={{ visible: visible }}
+          defaultTitle={title}
+          defaultBgColor="whiteStandard"
+          defaultStatusBarColor="whiteStandard"
+          defaultDescription={description}
+          isScrollOutlet={true}
+        >
           <Outlet />
-        </ProviderLanguage>
-      </ProviderApp>
+        </ProviderApp>
+      </ProviderLanguage>
       {(mode === 'dev' || mode == 'test') && (
         <>
           <ReactQueryDevtools buttonPosition="bottom-left" />
