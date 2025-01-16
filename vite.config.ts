@@ -24,9 +24,7 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         // eslint-disable-next-line no-undef
-        '@local': path.resolve(__dirname, './src'),
-        // eslint-disable-next-line no-undef
-        '@public': path.resolve(__dirname, './public')
+        '@local': path.resolve(__dirname, './src')
       }
     },
     plugins: [

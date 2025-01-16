@@ -27,8 +27,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "paths": {
-      "@local/*": ["src/*"],
-      "@public/*": ["public/*"],
+      "@local/*": ["src/*"]
     }
   },
   "include": ["src"],
