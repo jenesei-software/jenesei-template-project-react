@@ -19,7 +19,24 @@ export default defineConfig(({ mode }) => {
       port: 2000
     },
     build: {
-      outDir: 'build'
+      outDir: 'build',
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              return 'vendor'
+            }
+            if (id.includes('src/pages')) {
+              const page = id.split('src/pages/')[1].split('/')[0]
+              return `page-${page}`
+            }
+            if (id.includes('src/layouts')) {
+              const layout = id.split('src/layouts/')[1].split('/')[0]
+              return `layout-${layout}`
+            }
+          }
+        }
+      }
     },
     resolve: {
       alias: {
@@ -34,6 +51,7 @@ export default defineConfig(({ mode }) => {
         filename: 'service-worker-vite.js',
         registerType: 'autoUpdate',
         workbox: {
+          maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5 MB
           runtimeCaching: [
             {
               urlPattern: ({ url }) => url.origin === self.location.origin,
