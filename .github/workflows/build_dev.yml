@@ -41,6 +41,8 @@ jobs:
           git config --local user.name "github-actions[bot]"
 
       - name: Install node modules
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm ci
 
       - name: Build
