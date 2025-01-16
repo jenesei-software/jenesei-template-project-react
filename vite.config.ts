@@ -33,10 +33,6 @@ export default defineConfig(({ mode }) => {
       VitePWA({
         filename: 'service-worker-vite.js',
         registerType: 'autoUpdate',
-        devOptions: {
-          enabled: true,
-          type: 'module'
-        },
         workbox: {
           runtimeCaching: [
             {
