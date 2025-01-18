@@ -53,14 +53,6 @@ jobs:
       - name: Build
         run: npm run build:dev
 
-      - name: Cache build
-        uses: actions/cache@v4
-        with:
-          path: build/
-          key: ${{ runner.os }}-build-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-build-
-
       - name: Push changes
         uses: peaceiris/actions-gh-pages@v4
         with:
