@@ -48,23 +48,13 @@ export default defineConfig(({ mode }) => {
       react(),
       basicSsl(),
       VitePWA({
-        filename: 'service-worker-vite.js',
+        strategies: 'generateSW',
         registerType: 'autoUpdate',
+        includeManifestIcons: false,
+        injectRegister: false,
         workbox: {
-          maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5 MB
-          runtimeCaching: [
-            {
-              urlPattern: ({ url }) => url.origin === self.location.origin,
-              handler: 'CacheFirst',
-              options: {
-                cacheName: 'images-cache',
-                expiration: {
-                  maxEntries: 50,
-                  maxAgeSeconds: 7 * 24 * 60 * 60 // 7 days
-                }
-              }
-            }
-          ]
+          globPatterns: [], // Не кэшируем никакие файлы
+          maximumFileSizeToCacheInBytes: 0 // Устанавливаем лимит в 0 байт
         },
         manifest: {
           display: 'standalone',
