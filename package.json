@@ -18,7 +18,7 @@
     "@fontsource/inter": "^5.0.16",
     "@fontsource/roboto": "^5.0.14",
     "@jenesei-software/jenesei-id-web-api": "^1.0.1",
-    "@jenesei-software/jenesei-ui-react": "^0.5.14",
+    "@jenesei-software/jenesei-ui-react": "^0.5.17",
     "@tanstack/react-query": "^5.62.10",
     "@tanstack/react-router": "^1.97.3",
     "@tanstack/react-store": "^0.6.1",
