@@ -1,4 +1,4 @@
-import { ILanguageKeys } from '@jenesei-software/jenesei-ui-react'
+import { ILanguageKeys } from '@jenesei-software/jenesei-ui-react/types'
 import { PropsWithChildren } from 'react'
 
 export type ProviderLanguageProps = PropsWithChildren

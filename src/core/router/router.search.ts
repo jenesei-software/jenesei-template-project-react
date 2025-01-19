@@ -1,4 +1,4 @@
-import { IServiceKeys } from '@jenesei-software/jenesei-ui-react'
+import { IServiceKeys } from '@jenesei-software/jenesei-ui-react/types'
 
 export type LayoutRootRouteSearch = {
   pastResource?: IServiceKeys

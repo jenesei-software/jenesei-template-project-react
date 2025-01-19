@@ -1,5 +1,6 @@
 import { useGetSSOAuthProfile } from '@jenesei-software/jenesei-id-web-api'
-import { ProviderApp, useRemovePreviewLoader } from '@jenesei-software/jenesei-ui-react'
+import { useRemovePreviewLoader } from '@jenesei-software/jenesei-ui-react/area-preview'
+import { ProviderApp } from '@jenesei-software/jenesei-ui-react/context-app'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/router-devtools'

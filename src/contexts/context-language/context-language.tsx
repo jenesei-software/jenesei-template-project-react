@@ -1,4 +1,4 @@
-import { ILanguageKeys } from '@jenesei-software/jenesei-ui-react'
+import { ILanguageKeys } from '@jenesei-software/jenesei-ui-react/types'
 import { FC, createContext, useCallback, useContext, useMemo, useState } from 'react'
 import { I18nextProvider, useTranslation } from 'react-i18next'
 

@@ -1,4 +1,5 @@
-import { Button, Stack } from '@jenesei-software/jenesei-ui-react'
+import { Button } from '@jenesei-software/jenesei-ui-react/component-button'
+import { Stack } from '@jenesei-software/jenesei-ui-react/component-stack'
 import { useTranslation } from 'react-i18next'
 
 import { useLanguage } from '@local/contexts/context-language'

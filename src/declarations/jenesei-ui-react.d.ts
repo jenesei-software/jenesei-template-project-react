@@ -1,7 +1,6 @@
-import '@jenesei-software/jenesei-ui-react'
-import 'styled-components'
+import '@jenesei-software/jenesei-ui-react/context-cookie'
 
-declare module '@jenesei-software/jenesei-ui-react' {
+declare module '@jenesei-software/jenesei-ui-react/context-cookie' {
   export interface ValidCookieObject {
     auth_status: boolean
   }

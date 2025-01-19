@@ -1,4 +1,4 @@
-import { AuthLayout } from '@jenesei-software/jenesei-ui-react'
+import { AuthLayout } from '@jenesei-software/jenesei-ui-react/layout-auth'
 import { Outlet } from '@tanstack/react-router'
 
 export function LayoutPublic() {

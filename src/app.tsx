@@ -1,12 +1,9 @@
 import { ProviderAxiosWebId } from '@jenesei-software/jenesei-id-web-api'
-import {
-  JeneseiGlobalStyles,
-  JeneseiTheme,
-  ProviderCookie,
-  ProviderLocalStorage,
-  ProviderPermission,
-  ProviderScreenWidth
-} from '@jenesei-software/jenesei-ui-react'
+import { ProviderCookie } from '@jenesei-software/jenesei-ui-react/context-cookie'
+import { ProviderLocalStorage } from '@jenesei-software/jenesei-ui-react/context-local-storage'
+import { ProviderPermission } from '@jenesei-software/jenesei-ui-react/context-permission'
+import { ProviderScreenWidth } from '@jenesei-software/jenesei-ui-react/context-screen-width'
+import { JeneseiGlobalStyles, JeneseiTheme } from '@jenesei-software/jenesei-ui-react/style-theme'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { ThemeProvider } from 'styled-components'
 
