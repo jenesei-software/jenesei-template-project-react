@@ -29,3 +29,4 @@ dev-dist/*
 *.npmrc
 /dev-dist
 /dist
+stats.html
