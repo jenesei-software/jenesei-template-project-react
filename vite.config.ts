@@ -1,11 +1,11 @@
 import basicSsl from '@vitejs/plugin-basic-ssl'
 import react from '@vitejs/plugin-react'
 import path from 'path'
+import process from 'process'
 import { defineConfig, loadEnv } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig(({ mode }) => {
-  // eslint-disable-next-line no-undef
   const env = loadEnv(mode, process.cwd())
 
   const VITE_DEFAULT_NAME = env.VITE_DEFAULT_NAME || 'Default App Name'
@@ -40,7 +40,6 @@ export default defineConfig(({ mode }) => {
     },
     resolve: {
       alias: {
-        // eslint-disable-next-line no-undef
         '@local': path.resolve(__dirname, './src')
       }
     },
