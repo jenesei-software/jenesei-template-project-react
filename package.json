@@ -10,8 +10,8 @@
     "build:prod": "npm run generate-icons && tsc && vite build --mode prod",
     "build:dev": "npm run generate-icons && tsc && vite build --mode dev",
     "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\"",
-    "preview": "vite preview",
-    "format": "prettier --write \"src/**/*.{ts,tsx}\""
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@emotion/styled": "^11.14.0",
