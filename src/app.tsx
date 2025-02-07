@@ -10,6 +10,7 @@ import { ThemeProvider } from 'styled-components'
 import { queryClient } from '@local/core/query'
 import { getValidateCookieValue, validateCookieKeys } from '@local/functions/validate-cookie-value'
 import { getValidateLocalStorageValue, validateLocalStorageKeys } from '@local/functions/validate-local-storage-value'
+import { LayoutErrorBoundary } from '@local/layouts/layout-error'
 import { LayoutRouter } from '@local/layouts/layout-router'
 
 import '@fontsource/inter/100.css'
@@ -31,32 +32,34 @@ const availabilityCookieName = import.meta.env.VITE_AVAILABILITY_COOKIE_NAME || 
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={JeneseiTheme}>
-        <JeneseiGlobalStyles />
-        <ProviderScreenWidth>
-          <ProviderAxiosWebId coreURL={coreURL} baseURL={baseURL} availabilityCookieName={availabilityCookieName}>
-            <ProviderCookie
-              validate={{
-                validateKeys: validateCookieKeys,
-                getValidateCookieValue
-              }}
-            >
-              <ProviderLocalStorage
+    <ThemeProvider theme={JeneseiTheme}>
+      <JeneseiGlobalStyles />
+      <LayoutErrorBoundary>
+        <QueryClientProvider client={queryClient}>
+          <ProviderScreenWidth>
+            <ProviderAxiosWebId coreURL={coreURL} baseURL={baseURL} availabilityCookieName={availabilityCookieName}>
+              <ProviderCookie
                 validate={{
-                  validateKeys: validateLocalStorageKeys,
-                  getValidateLocalStorageValue
+                  validateKeys: validateCookieKeys,
+                  getValidateCookieValue
                 }}
               >
-                <ProviderPermission serviceWorkerPath="/service-worker.js">
-                  <LayoutRouter />
-                </ProviderPermission>
-              </ProviderLocalStorage>
-            </ProviderCookie>
-          </ProviderAxiosWebId>
-        </ProviderScreenWidth>
-      </ThemeProvider>
-    </QueryClientProvider>
+                <ProviderLocalStorage
+                  validate={{
+                    validateKeys: validateLocalStorageKeys,
+                    getValidateLocalStorageValue
+                  }}
+                >
+                  <ProviderPermission serviceWorkerPath="/service-worker.js">
+                    <LayoutRouter />
+                  </ProviderPermission>
+                </ProviderLocalStorage>
+              </ProviderCookie>
+            </ProviderAxiosWebId>
+          </ProviderScreenWidth>
+        </QueryClientProvider>
+      </LayoutErrorBoundary>
+    </ThemeProvider>
   )
 }
 

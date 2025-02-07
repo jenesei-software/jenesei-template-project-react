@@ -17,6 +17,17 @@ export function LayoutRoot() {
   const { isLoading } = useGetSSOAuthProfile({ retry: false })
 
   const visible = useMemo(() => !!isLoading, [isLoading])
+  // const matchRoute = useMatchRoute()
+
+  // const isMatchPrivate = !!matchRoute({ to: '/pr', fuzzy: true })
+  // const isMatchPublic = !!matchRoute({ to: '/pu', fuzzy: true })
+
+  // useEffect(() => {
+  //   console.log('isMatchPrivate', isMatchPrivate)
+  // }, [isMatchPrivate])
+  // useEffect(() => {
+  //   console.log('isMatchPublic', isMatchPublic)
+  // }, [isMatchPublic])
 
   return (
     <>

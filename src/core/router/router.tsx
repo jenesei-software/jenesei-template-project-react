@@ -1,6 +1,7 @@
 import { QueryClient } from '@tanstack/react-query'
 import { Navigate, createRootRouteWithContext, createRoute, createRouter, redirect } from '@tanstack/react-router'
 
+import { LayoutErrorRouter } from '@local/layouts/layout-error'
 import { LayoutPrivate } from '@local/layouts/layout-private'
 import { LayoutPublic } from '@local/layouts/layout-public'
 import { LayoutRoot } from '@local/layouts/layout-root'
@@ -17,6 +18,7 @@ export interface IContext {
 export const LayoutRootRoute = createRootRouteWithContext<IContext>()({
   component: LayoutRoot,
   validateSearch: validateLayoutRootRouteSearch,
+  errorComponent: LayoutErrorRouter,
   notFoundComponent: () => <Navigate to="/pu" />,
   beforeLoad: props => {
     const isPublic = !!props.matches.find(match => match.id === '/pu')
