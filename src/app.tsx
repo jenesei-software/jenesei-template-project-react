@@ -50,7 +50,7 @@ function App() {
                     getValidateLocalStorageValue
                   }}
                 >
-                  <ProviderPermission serviceWorkerPath="/service-worker.js">
+                  <ProviderPermission>
                     <LayoutRouter />
                   </ProviderPermission>
                 </ProviderLocalStorage>

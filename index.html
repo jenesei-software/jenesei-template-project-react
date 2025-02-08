@@ -35,82 +35,38 @@
 
       /* Стили для PreviewLoading */
       .preview-loading {
-        --color: #1769a5;
-        --size-mid: 6vmin;
-        --size-dot: 1.5vmin;
-        --size-bar: 0.4vmin;
-        --size-square: 3vmin;
-        position: relative;
-      }
-
-      .preview-loading::before,
-      .preview-loading::after {
-        content: '';
-        box-sizing: border-box;
-        position: absolute;
-      }
-
-      .preview-loading::before,
-      .preview-loading::after {
-        width: var(--size-square);
-        height: var(--size-square);
-        background-color: var(--color);
-      }
-
-      .preview-loading::before {
-        top: calc(50% - var(--size-square));
-        left: calc(50% - var(--size-square));
-        animation: loader1 2.4s cubic-bezier(0, 0, 0.24, 1.21) infinite;
-      }
-
-      .preview-loading::after {
-        top: 50%;
-        left: 50%;
-        animation: loader2 2.4s cubic-bezier(0, 0, 0.24, 1.21) infinite;
-      }
-
-      @keyframes loader1 {
-        0%,
-        100% {
-          transform: none;
-        }
-
-        25% {
-          transform: translateX(100%);
-        }
-
-        50% {
-          transform: translateX(100%) translateY(100%);
-        }
-
-        75% {
-          transform: translateY(100%);
-        }
-      }
-
-      @keyframes loader2 {
-        0%,
-        100% {
-          transform: none;
-        }
-
-        25% {
-          transform: translateX(-100%);
-        }
-
-        50% {
-          transform: translateX(-100%) translateY(-100%);
-        }
-
-        75% {
-          transform: translateY(-100%);
-        }
+        width: 8vmin;
+        height: 8vmin;
+        color: #1769a5;
       }
     </style>
   </head>
   <body>
     <div class="preview-wrapper">
-      <div class="preview-loading"></div>
+      <div class="preview-loading">
+        <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="sc-ffiKcS dAtnQN">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <path stroke-dasharray="16" stroke-dashoffset="16" d="M12 3c4.97 0 9 4.03 9 9">
+              <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="16;0"></animate>
+              <animateTransform
+                attributeName="transform"
+                dur="1.5s"
+                repeatCount="indefinite"
+                type="rotate"
+                values="0 12 12;360 12 12"
+              ></animateTransform>
+            </path>
+            <path
+              stroke-dasharray="64"
+              stroke-dashoffset="64"
+              stroke-opacity="0.3"
+              d="M12 3c4.97 0 9 4.03 9 9c0 4.97 -4.03 9 -9 9c-4.97 0 -9 -4.03 -9 -9c0 -4.97 4.03 -9 9 -9Z"
+            >
+              <animate fill="freeze" attributeName="stroke-dashoffset" dur="1.2s" values="64;0"></animate>
+            </path>
+          </g>
+        </svg>
+      </div>
     </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
