@@ -7,7 +7,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd())
-
+  console.log('mode', mode)
   const VITE_DEFAULT_NAME = env.VITE_DEFAULT_NAME || 'Default App Name'
   const VITE_DEFAULT_SHORTNAME = env.VITE_DEFAULT_SHORTNAME || 'Default Shortname'
   const VITE_DEFAULT_THEME_COLOR = env.VITE_DEFAULT_THEME_COLOR || '#ffffff'

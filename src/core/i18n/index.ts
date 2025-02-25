@@ -4,10 +4,7 @@ import i18n from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import Backend from 'i18next-chained-backend'
 import HttpApi from 'i18next-http-backend'
-import LocalStorageBackend from 'i18next-localstorage-backend'
 import { initReactI18next } from 'react-i18next'
-
-import { secondsIn7Days } from '@local/constants'
 
 const mode = import.meta.env.VITE_NODE_ENV
 
@@ -30,14 +27,13 @@ i18n
     load: 'languageOnly',
     defaultNS,
     backend: {
-      backends: [LocalStorageBackend, HttpApi],
+      backends: [HttpApi],
       backendOptions: [
         {
           prefix: 'i18next_res_',
-          expirationTime: secondsIn7Days
+          loadPath: '/locales/{{lng}}/{{ns}}.json'
         }
-      ],
-      loadPath: '/locales/{{lng}}/{{ns}}.json'
+      ]
     },
     supportedLngs: supportedLngs,
     fallbackLng: fallbackLng,
