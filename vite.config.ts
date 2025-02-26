@@ -3,16 +3,31 @@ import react from '@vitejs/plugin-react'
 import path from 'path'
 import process from 'process'
 import { defineConfig, loadEnv } from 'vite'
+import { createHtmlPlugin } from 'vite-plugin-html'
 import { VitePWA } from 'vite-plugin-pwa'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd())
-  console.log('mode', mode)
   const VITE_DEFAULT_NAME = env.VITE_DEFAULT_NAME || 'Default App Name'
   const VITE_DEFAULT_SHORTNAME = env.VITE_DEFAULT_SHORTNAME || 'Default Shortname'
   const VITE_DEFAULT_THEME_COLOR = env.VITE_DEFAULT_THEME_COLOR || '#ffffff'
   const VITE_DEFAULT_DESCRIPTION = env.VITE_DEFAULT_DESCRIPTION || 'Default Description'
 
+  const robotsMode = {
+    prod: {
+      txt: 'robots/robots.prod.txt',
+      meta: 'noindex, nofollow'
+    },
+    dev: {
+      txt: 'robots/robots.dev.txt',
+      meta: 'index, follow'
+    },
+    test: {
+      txt: 'robots/robots.test.txt',
+      meta: 'noindex, nofollow'
+    }
+  }
   return {
     server: {
       host: 'local.dev.jenesei.ru',
@@ -44,9 +59,32 @@ export default defineConfig(({ mode }) => {
       }
     },
     plugins: [
+      viteStaticCopy({
+        targets: [
+          {
+            src: robotsMode[mode]?.txt,
+            dest: '',
+            rename: 'robots.txt'
+          }
+        ]
+      }),
+      createHtmlPlugin({
+        minify: true,
+        entry: 'src/main.tsx',
+        template: 'index.html',
+        inject: {
+          data: {
+            title: VITE_DEFAULT_SHORTNAME,
+            robotsMeta: robotsMode[mode]?.meta,
+            icon64: 'icons/icon-64x64.ico',
+            icon180: 'icons/icon-180x180.ico'
+          }
+        }
+      }),
       react(),
       basicSsl(),
       VitePWA({
+        filename: 'vite-sw.js', //!!! НИКОГДА НЕ МЕНЯТЬ !!!
         strategies: 'generateSW',
         registerType: 'autoUpdate',
         includeManifestIcons: false,
