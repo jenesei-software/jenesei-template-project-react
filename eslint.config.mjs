@@ -1,4 +1,6 @@
 import pluginJs from '@eslint/js'
+import pluginQuery from '@tanstack/eslint-plugin-query'
+import pluginRouter from '@tanstack/eslint-plugin-router'
 import configPrettier from 'eslint-config-prettier'
 import pluginPrettier from 'eslint-plugin-prettier'
 import pluginReact from 'eslint-plugin-react'
@@ -17,6 +19,8 @@ export default [
       }
     }
   },
+  ...pluginRouter.configs['flat/recommended'],
+  ...pluginQuery.configs['flat/recommended'],
   ...pluginTypescript.configs.recommended,
   pluginReact.configs.flat.recommended,
   pluginJs.configs.recommended,

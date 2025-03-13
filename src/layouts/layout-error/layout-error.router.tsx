@@ -11,7 +11,6 @@ export function LayoutErrorRouter(): ReactElement<LayoutErrorRouterProps> {
   return (
     <CatchBoundary getResetKey={() => 'reset'} onCatch={error => console.error(error)}>
       <LayoutErrorWrapper>
-        {/* <LayoutErrorStyledLogoLoadingMinCar /> */}
         <LayoutErrorTitlesContainer>
           <Typography align="center" size={16} weight={700} color="black80">
             Произошла неизвестная ошибка. Пожалуйста, попробуйте позже.

@@ -8,43 +8,23 @@ import { LayoutRoot } from '@local/layouts/layout-root'
 import { PagePrivateHome } from '@local/pages/private/home'
 import { PagePublicHome } from '@local/pages/public/home'
 
-import { validateLayoutRootRouteSearch } from '.'
+import { validateLayoutRouteRootSearch } from '.'
 
 export interface IContext {
   queryClient: QueryClient
-  auth: { isAuthenticated: boolean | undefined }
 }
 
-export const LayoutRootRoute = createRootRouteWithContext<IContext>()({
+export const LayoutRouteRoot = createRootRouteWithContext<IContext>()({
   component: LayoutRoot,
-  validateSearch: validateLayoutRootRouteSearch,
+  validateSearch: validateLayoutRouteRootSearch,
   errorComponent: LayoutErrorRouter,
-  notFoundComponent: () => <Navigate to="/pu" />,
-  beforeLoad: props => {
-    const isPublic = !!props.matches.find(match => match.id === '/pu')
-    const isPrivate = !!props.matches.find(match => match.id === '/pr')
-
-    const isAuthenticated = props.context.auth.isAuthenticated
-
-    if (isAuthenticated !== undefined)
-      if (isAuthenticated) {
-        if (isPublic)
-          throw redirect({
-            to: '/pr'
-          })
-      } else {
-        if (isPrivate)
-          throw redirect({
-            to: '/pu'
-          })
-      }
-  }
+  notFoundComponent: () => <Navigate to={LayoutRoutePublic.fullPath} />
 })
 
-export const LayoutPrivateRoute = createRoute({
-  getParentRoute: () => LayoutRootRoute,
+export const LayoutRoutePrivate = createRoute({
+  getParentRoute: () => LayoutRouteRoot,
   component: LayoutPrivate,
-  notFoundComponent: () => <Navigate to="/pr/home" />,
+  notFoundComponent: () => <Navigate to={PageRoutePrivateHome.fullPath} />,
   path: '/pr',
   beforeLoad: props => {
     const isFirst = props.location.pathname == '/pr'
@@ -55,11 +35,11 @@ export const LayoutPrivateRoute = createRoute({
   }
 })
 
-export const LayoutPublicRoute = createRoute({
-  getParentRoute: () => LayoutRootRoute,
+export const LayoutRoutePublic = createRoute({
+  getParentRoute: () => LayoutRouteRoot,
   component: LayoutPublic,
-  notFoundComponent: () => <Navigate to="/pu/home" />,
-  path: 'pu',
+  notFoundComponent: () => <Navigate to={PageRoutePublicHome.fullPath} />,
+  path: '/pu',
   beforeLoad: props => {
     const isFirst = props.location.pathname == '/pu'
     if (isFirst)
@@ -69,32 +49,31 @@ export const LayoutPublicRoute = createRoute({
   }
 })
 
-export const PagePrivateHomeRoute = createRoute({
-  getParentRoute: () => LayoutPrivateRoute,
+export const PageRoutePrivateHome = createRoute({
+  getParentRoute: () => LayoutRoutePrivate,
   component: PagePrivateHome,
   path: '/home'
 })
 
-export const PagePagePublicHome = createRoute({
-  getParentRoute: () => LayoutPublicRoute,
+export const PageRoutePublicHome = createRoute({
+  getParentRoute: () => LayoutRoutePublic,
   component: PagePublicHome,
   path: '/home'
 })
 
-const routeTree = LayoutRootRoute.addChildren({
-  LayoutPublicRoute: LayoutPublicRoute.addChildren({
-    PagePagePublicHome
+const routeTree = LayoutRouteRoot.addChildren({
+  LayoutRoutePublic: LayoutRoutePublic.addChildren({
+    PageRoutePublicHome
   }),
-  LayoutPrivateRoute: LayoutPrivateRoute.addChildren({
-    PagePrivateHomeRoute
+  LayoutRoutePrivate: LayoutRoutePrivate.addChildren({
+    PageRoutePrivateHome
   })
 })
 
 export const router = createRouter({
   routeTree: routeTree,
   context: {
-    queryClient: undefined!,
-    auth: undefined!
+    queryClient: undefined!
   },
   defaultPreload: 'intent',
   defaultPreloadStaleTime: 0

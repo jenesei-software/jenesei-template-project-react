@@ -1,16 +1,16 @@
 import { IServiceKeys } from '@jenesei-software/jenesei-ui-react/types'
 
-export type LayoutRootRouteSearch = {
+export type LayoutRouteRootSearch = {
   pastResource?: IServiceKeys
   // redirect?: string
 }
-export const validateLayoutRootRouteSearch = (
-  search: Record<keyof LayoutRootRouteSearch, unknown>
-): LayoutRootRouteSearch => {
-  const isPastResource = (value: unknown): value is LayoutRootRouteSearch['pastResource'] => value === 'jenesei_id'
-  // const isRedirect = (value: unknown): value is LayoutRootRouteSearch['redirect'] => typeof value === 'string'
+export const validateLayoutRouteRootSearch = (
+  search: Record<keyof LayoutRouteRootSearch, unknown>
+): LayoutRouteRootSearch => {
+  const isPastResource = (value: unknown): value is LayoutRouteRootSearch['pastResource'] => value === 'jenesei_id'
+  // const isRedirect = (value: unknown): value is LayoutRouteRootSearch['redirect'] => typeof value === 'string'
 
-  const searchParams: LayoutRootRouteSearch = {
+  const searchParams: LayoutRouteRootSearch = {
     pastResource: isPastResource(search?.pastResource) ? search.pastResource : undefined
     // redirect: isRedirect(search?.redirect) ? search.redirect : undefined
   }

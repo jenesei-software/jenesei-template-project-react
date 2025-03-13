@@ -6,7 +6,7 @@ import Backend from 'i18next-chained-backend'
 import HttpApi from 'i18next-http-backend'
 import { initReactI18next } from 'react-i18next'
 
-const mode = import.meta.env.VITE_NODE_ENV
+// const mode = import.meta.env.VITE_NODE_ENV
 
 export const defaultNS: INameSpace = 'translation'
 export const fallbackLng = KeysLanguage.ru as ILanguageKeys
@@ -37,7 +37,7 @@ i18n
     },
     supportedLngs: supportedLngs,
     fallbackLng: fallbackLng,
-    debug: mode !== 'prod',
+    // debug: mode !== 'prod',
     interpolation: {
       escapeValue: false
     },

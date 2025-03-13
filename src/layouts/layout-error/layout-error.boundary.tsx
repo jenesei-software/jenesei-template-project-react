@@ -22,7 +22,6 @@ export class LayoutErrorBoundary extends Component<LayoutErrorBoundaryProps, Lay
     if (this.state.hasError) {
       return (
         <LayoutErrorWrapper>
-          {/* <LayoutErrorStyledLogoLoadingMinCar /> */}
           <Stack gap={'8px'} flexDirection="column" justifyContent="center" alignItems="center">
             <Typography align="center" size={16} weight={700} color="black80">
               Произошла неизвестная ошибка.
