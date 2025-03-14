@@ -1,3 +1,4 @@
+import { useGSAP } from '@gsap/react'
 import { ProviderAxiosWebId } from '@jenesei-software/jenesei-id-web-api'
 import { ProviderCookie } from '@jenesei-software/jenesei-ui-react/context-cookie'
 import { ProviderLocalStorage } from '@jenesei-software/jenesei-ui-react/context-local-storage'
@@ -5,6 +6,7 @@ import { ProviderPermission } from '@jenesei-software/jenesei-ui-react/context-p
 import { ProviderScreenWidth } from '@jenesei-software/jenesei-ui-react/context-screen-width'
 import { JeneseiGlobalStyles, JeneseiTheme } from '@jenesei-software/jenesei-ui-react/style-theme'
 import { QueryClientProvider } from '@tanstack/react-query'
+import gsap from 'gsap'
 import { ThemeProvider } from 'styled-components'
 
 import { queryClient } from '@local/core/query'
@@ -29,6 +31,8 @@ import '@fontsource/roboto/900.css'
 const baseURL = import.meta.env.VITE_BASE_URL || ''
 const coreURL = import.meta.env.VITE_CORE_URL || ''
 const availabilityCookieName = import.meta.env.VITE_AVAILABILITY_COOKIE_NAME || ''
+
+gsap.registerPlugin(useGSAP)
 
 function App() {
   return (
