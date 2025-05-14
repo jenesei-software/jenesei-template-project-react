@@ -28,6 +28,10 @@ export default defineConfig(({ mode }) => {
       meta: 'noindex, nofollow'
     }
   }
+
+  const sizesBackgroundTransparent = [64, 180, 192, 256, 384, 512]
+  const sizesBackgroundWhite = [180, 192]
+  const sizesFavicon = [64]
   return {
     server: {
       host: 'local.dev.jenesei.ru',
@@ -59,6 +63,14 @@ export default defineConfig(({ mode }) => {
       }
     },
     plugins: [
+       pluginUpdateIcons({
+        pathInputFile: path.resolve(__dirname, 'public/logos/logo-jenesei-id.png'),
+        pathOutputDirectory: path.resolve(__dirname, 'public/icons'),
+        prefix: 'icon',
+        sizesBackgroundTransparent: sizesBackgroundTransparent,
+        sizesBackgroundWhite: sizesBackgroundWhite,
+        sizesFavicon: sizesFavicon
+      }),
       viteStaticCopy({
         targets: [
           {
