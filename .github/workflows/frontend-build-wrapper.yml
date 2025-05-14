@@ -1,0 +1,22 @@
+name: Frontend Build Wrapper
+
+on:
+  workflow_dispatch:
+    inputs:
+      version_type:
+        description: 'Version bump'
+        required: false
+        default: 'patch'
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
+
+jobs:
+  call-publisher:
+    uses: jenesei-software/.github/.github/workflows/frontend_build.yml@main
+    with:
+      version_type: ${{ inputs.version_type }}
+    secrets:
+      ACCESS_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN  }}
