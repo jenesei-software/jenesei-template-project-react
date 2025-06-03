@@ -1,3 +1,4 @@
+import { generateManifestIcons, pluginUpdateIcons } from '@jenesei-software/jenesei-plugin-vite'
 import basicSsl from '@vitejs/plugin-basic-ssl'
 import react from '@vitejs/plugin-react'
 import path from 'path'
@@ -9,10 +10,10 @@ import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd())
-  const VITE_DEFAULT_NAME = env.VITE_DEFAULT_NAME || 'Default App Name'
-  const VITE_DEFAULT_SHORTNAME = env.VITE_DEFAULT_SHORTNAME || 'Default Shortname'
-  const VITE_DEFAULT_THEME_COLOR = env.VITE_DEFAULT_THEME_COLOR || '#ffffff'
-  const VITE_DEFAULT_DESCRIPTION = env.VITE_DEFAULT_DESCRIPTION || 'Default Description'
+  const VITE_DEFAULT_NAME = env.VITE_DEFAULT_NAME
+  const VITE_DEFAULT_SHORTNAME = env.VITE_DEFAULT_SHORTNAME
+  const VITE_DEFAULT_THEME_COLOR = env.VITE_DEFAULT_THEME_COLOR
+  const VITE_DEFAULT_DESCRIPTION = env.VITE_DEFAULT_DESCRIPTION
 
   const robotsMode = {
     prod: {
@@ -21,7 +22,7 @@ export default defineConfig(({ mode }) => {
     },
     dev: {
       txt: 'robots/robots.dev.txt',
-      meta: 'index, follow'
+      meta: 'index, nofollow'
     },
     test: {
       txt: 'robots/robots.test.txt',
@@ -29,13 +30,13 @@ export default defineConfig(({ mode }) => {
     }
   }
 
-  const sizesBackgroundTransparent = [64, 180, 192, 256, 384, 512]
-  const sizesBackgroundWhite = [180, 192]
+  const sizesBackgroundTransparent = [57, 64, 72, 76, 114, 120, 144, 152, 180, 192, 256, 384, 512]
+  const sizesBackgroundWhite = []
   const sizesFavicon = [64]
   return {
     server: {
       host: 'local.dev.jenesei.ru',
-      port: 2000
+      port: 3000
     },
     build: {
       outDir: 'build',
@@ -63,7 +64,7 @@ export default defineConfig(({ mode }) => {
       }
     },
     plugins: [
-       pluginUpdateIcons({
+      pluginUpdateIcons({
         pathInputFile: path.resolve(__dirname, 'public/logos/logo-jenesei-id.png'),
         pathOutputDirectory: path.resolve(__dirname, 'public/icons'),
         prefix: 'icon',
@@ -88,8 +89,16 @@ export default defineConfig(({ mode }) => {
           data: {
             title: VITE_DEFAULT_SHORTNAME,
             robotsMeta: robotsMode[mode]?.meta,
-            icon64: 'icons/icon-64x64.ico',
-            icon180: 'icons/icon-180x180.ico'
+            icon57: `icons/icon-57x57.png`,
+            icon72: `icons/icon-72x72.png`,
+            icon76: `icons/icon-76x76.png`,
+            icon114: `icons/icon-114x114.png`,
+            icon120: `icons/icon-1204x120.png`,
+            icon144: `icons/icon-144x144.png`,
+            icon152: `icons/icon-152x152.png`,
+            icon180: `icons/icon-180x180.png`,
+
+            icon64Fav: `icons/icon-64x64-favicon.ico`
           }
         }
       }),
@@ -102,8 +111,8 @@ export default defineConfig(({ mode }) => {
         includeManifestIcons: false,
         injectRegister: false,
         workbox: {
-          globPatterns: [], // Не кэшируем никакие файлы
-          maximumFileSizeToCacheInBytes: 0 // Устанавливаем лимит в 0 байт
+          globPatterns: [],
+          maximumFileSizeToCacheInBytes: 0
         },
         manifest: {
           display: 'standalone',
@@ -114,44 +123,13 @@ export default defineConfig(({ mode }) => {
           background_color: VITE_DEFAULT_THEME_COLOR,
           description: VITE_DEFAULT_DESCRIPTION,
           start_url: '/',
-          icons: [
-            {
-              src: 'icons/icon-64x64.ico',
-              sizes: '64x64',
-              type: 'image/x-icon',
-              purpose: 'any'
-            },
-            {
-              src: 'icons/icon-192x192.png',
-              sizes: '192x192',
-              type: 'image/png',
-              purpose: 'any'
-            },
-            {
-              src: 'icons/icon-256x256.png',
-              sizes: '256x256',
-              type: 'image/png',
-              purpose: 'any'
-            },
-            {
-              src: 'icons/icon-384x384.png',
-              sizes: '384x384',
-              type: 'image/png',
-              purpose: 'any'
-            },
-            {
-              src: 'icons/icon-512x512.png',
-              sizes: '512x512',
-              type: 'image/png',
-              purpose: 'any'
-            },
-            {
-              src: 'icons/icon-180x180.png',
-              sizes: '180x180',
-              type: 'image/png',
-              purpose: 'any'
-            }
-          ]
+          icons: generateManifestIcons({
+            path: 'icons',
+            prefix: 'icon',
+            sizesBackgroundWhite: [],
+            sizesBackgroundTransparent: sizesBackgroundTransparent,
+            sizesFavicon: sizesFavicon
+          })
         }
       })
     ]

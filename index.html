@@ -6,76 +6,17 @@
     <meta charset="UTF-8" />
     <meta name="robots" content="<%= robotsMeta %>" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="shortcut icon" href="<%= icon64Fav %>" />
+    <link rel="apple-touch-icon" sizes="57x57" href="<%= icon57 %>" />
+    <link rel="apple-touch-icon" sizes="72x72" href="<%= icon72 %>" />
+    <link rel="apple-touch-icon" sizes="76x76" href="<%= icon76 %>" />
+    <link rel="apple-touch-icon" sizes="114x114" href="<%= icon114 %>" />
+    <link rel="apple-touch-icon" sizes="120x120" href="<%= icon120 %>" />
+    <link rel="apple-touch-icon" sizes="144x144" href="<%= icon144 %>" />
+    <link rel="apple-touch-icon" sizes="152x152" href="<%= icon152 %>" />
     <link rel="apple-touch-icon" sizes="180x180" href="<%= icon180 %>" />
-    <link rel="shortcut icon" href="<%= icon64 %>" />
-    <!-- Preview   -->
-    <style>
-      /* Стили для PreviewWrapper */
-      .preview-wrapper {
-        z-index: 9999;
-        background-color: #ffffff;
-        width: 100dvw;
-        height: 100dvh;
-        position: fixed;
-        top: 0;
-        left: 0;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        opacity: 1;
-        transform: translateY(0);
-        transition:
-          opacity 0.5s ease,
-          transform 0.5s ease;
-      }
-
-      .preview-wrapper.visible {
-        opacity: 0;
-        transform: translateY(0);
-      }
-
-      /* Стили для PreviewLoading */
-      .preview-loading {
-        width: 8vmin;
-        height: 8vmin;
-        color: #1769a5;
-      }
-      .preview-loading svg {
-        height: 100%;
-        min-height: 100%;
-        width: 100%;
-        min-width: 100%;
-      }
-    </style>
   </head>
   <body>
-    <div class="preview-wrapper">
-      <div class="preview-loading">
-        <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="sc-ffiKcS dAtnQN">
-          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-            <path stroke-dasharray="16" stroke-dashoffset="16" d="M12 3c4.97 0 9 4.03 9 9">
-              <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="16;0"></animate>
-              <animateTransform
-                attributeName="transform"
-                dur="1.5s"
-                repeatCount="indefinite"
-                type="rotate"
-                values="0 12 12;360 12 12"
-              ></animateTransform>
-            </path>
-            <path
-              stroke-dasharray="64"
-              stroke-dashoffset="64"
-              stroke-opacity="0.3"
-              d="M12 3c4.97 0 9 4.03 9 9c0 4.97 -4.03 9 -9 9c-4.97 0 -9 -4.03 -9 -9c0 -4.97 4.03 -9 9 -9Z"
-            >
-              <animate fill="freeze" attributeName="stroke-dashoffset" dur="1.2s" values="64;0"></animate>
-            </path>
-          </g>
-        </svg>
-      </div>
-    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

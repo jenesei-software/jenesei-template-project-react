@@ -9,12 +9,12 @@ export function PagePrivateHome() {
   const { t } = useTranslation('translation')
 
   return (
-    <Stack maxW="600px" w="100%" gap="50px" alignItems="stretch" flexDirection="column">
+    <Stack>
       Private Home. Current lng: {lng} {t('test')}
-      <Button onClick={() => changeLng('ru')} genre="greenTransparent" size="medium">
+      <Button onClick={() => changeLng('rus')} genre="greenTransparent" size="medium">
         Ru
       </Button>
-      <Button onClick={() => changeLng('en')} genre="greenTransparent" size="medium">
+      <Button onClick={() => changeLng('eng')} genre="greenTransparent" size="medium">
         En
       </Button>
     </Stack>

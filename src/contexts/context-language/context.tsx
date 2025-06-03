@@ -1,5 +1,5 @@
 import { ILanguageKeys } from '@jenesei-software/jenesei-ui-react/types'
-import { FC, createContext, useCallback, useContext, useMemo, useState } from 'react'
+import { FC, createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { I18nextProvider, useTranslation } from 'react-i18next'
 
 import { browserLng, fallbackLng, supportedLngs } from '@local/core/i18n'
@@ -51,6 +51,10 @@ export const ProviderLanguage: FC<ProviderLanguageProps> = props => {
   const localFallbackLng = useMemo(() => fallbackLng, [])
   const localSupportedLngs = useMemo(() => supportedLngs, [])
   const localBrowserLng = useMemo(() => browserLng, [])
+
+  useEffect(() => {
+    document.documentElement.lang = lng
+  }, [lng])
 
   return (
     <I18nextProvider i18n={i18n}>

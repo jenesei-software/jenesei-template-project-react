@@ -6,18 +6,16 @@ import Backend from 'i18next-chained-backend'
 import HttpApi from 'i18next-http-backend'
 import { initReactI18next } from 'react-i18next'
 
-// const mode = import.meta.env.VITE_NODE_ENV
+import translation from '../../../public/locales/rus/translation.json'
 
 export const defaultNS: INameSpace = 'translation'
-export const fallbackLng = KeysLanguage.ru as ILanguageKeys
+export const fallbackLng = KeysLanguage.eng as ILanguageKeys
 export const supportedLngs = Object.values(KeysLanguage) as ILanguageKeys[]
 export const browserLng = navigator.language.split('-')[0]
 
 export type INameSpace = 'translation'
 
-export interface IResources {
-  test: string
-}
+export type IResources = typeof translation
 
 i18n
   .use(Backend)
@@ -37,7 +35,6 @@ i18n
     },
     supportedLngs: supportedLngs,
     fallbackLng: fallbackLng,
-    // debug: mode !== 'prod',
     interpolation: {
       escapeValue: false
     },
