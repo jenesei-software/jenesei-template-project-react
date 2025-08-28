@@ -1,5 +1,8 @@
-import { Stack } from '@jenesei-software/jenesei-ui-react/component-stack'
+import { Stack } from '@jenesei-software/jenesei-kit-react/component-stack';
+import { useTranslation } from 'react-i18next';
 
 export function PagePublicHome() {
-  return <Stack>Public Home</Stack>
+  const { t } = useTranslation('translation');
+
+  return <Stack>{t('meta.description')}</Stack>;
 }

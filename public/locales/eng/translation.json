@@ -1,3 +1,19 @@
 {
-  "test": "test"
+  "url": {
+    "title": {
+      "/pr/home": "pr - home",
+      "/pu/home": "pu - home"
+    }
+  },
+  "meta": {
+    "description": "eng, meta - description"
+  },
+  "sonner": {
+    "undo": "sonner - undo"
+  },
+  "form": {
+    "language": {
+      "placeholder": "Choose language"
+    }
+  }
 }

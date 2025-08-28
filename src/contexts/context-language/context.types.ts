@@ -1,13 +1,20 @@
-import { ILanguageKeys } from '@jenesei-software/jenesei-ui-react/types'
-import { PropsWithChildren } from 'react'
+import { ILanguageKeys } from '@jenesei-software/jenesei-kit-react/types';
+import { PropsWithChildren } from 'react';
 
-export type ProviderLanguageProps = PropsWithChildren
+export type ProviderLanguageProps = PropsWithChildren;
 
 export interface LanguageContextProps {
-  lng: ILanguageKeys
-  fallbackLng: ILanguageKeys
-  supportedLngs: ILanguageKeys[]
-  browserLng: string
-  isError: boolean
-  changeLng: (lng: ILanguageKeys) => void
+  browserLng: string;
+
+  changeLng: (lng: ILanguageKeys) => void;
+
+  fallbackLng: ILanguageKeys;
+
+  isError: boolean;
+
+  isLoading: boolean;
+
+  lng: ILanguageKeys;
+
+  supportedLngs: ILanguageKeys[];
 }

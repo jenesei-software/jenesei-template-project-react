@@ -1,8 +1,8 @@
-import { Button } from '@jenesei-software/jenesei-ui-react/component-button'
-import { Stack } from '@jenesei-software/jenesei-ui-react/component-stack'
-import { useTranslation } from 'react-i18next'
-
 import { useLanguage } from '@local/contexts/context-language'
+
+import { Button } from '@jenesei-software/jenesei-kit-react/component-button'
+import { Stack } from '@jenesei-software/jenesei-kit-react/component-stack'
+import { useTranslation } from 'react-i18next'
 
 export function PagePrivateHome() {
   const { changeLng, lng } = useLanguage()
@@ -10,7 +10,7 @@ export function PagePrivateHome() {
 
   return (
     <Stack>
-      Private Home. Current lng: {lng} {t('test')}
+      Private Home. Current lng: {lng} {t('meta.description')}
       <Button onClick={() => changeLng('rus')} genre="greenTransparent" size="medium">
         Ru
       </Button>
