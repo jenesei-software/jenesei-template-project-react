@@ -8,8 +8,8 @@
     "build:test": "tsc && vite build --mode test",
     "build:prod": "tsc && vite build --mode prod",
     "build:dev": "tsc && vite build --mode dev",
-    "biome:lint": "biome lint .",
-    "biome:format": "biome format --write .",
+    "biome:lint": "biome lint src",
+    "biome:format": "biome format --write src",
     "changelog": "conventional-changelog -p eslint -i CHANGELOG.md -s -r 0"
   },
   "dependencies": {
