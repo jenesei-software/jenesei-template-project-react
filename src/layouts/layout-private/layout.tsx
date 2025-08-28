@@ -1,13 +1,13 @@
-import { Stack } from '@jenesei-software/jenesei-kit-react/component-stack'
-import { useScreenWidth } from '@jenesei-software/jenesei-kit-react/context-screen-width'
-import { Outlet } from '@tanstack/react-router'
+import { Stack } from '@jenesei-software/jenesei-kit-react/component-stack';
+import { useScreenWidth } from '@jenesei-software/jenesei-kit-react/context-screen-width';
+import { Outlet } from '@tanstack/react-router';
 
 export function LayoutPrivate() {
-  const { screenActual } = useScreenWidth()
+  const { screenActual } = useScreenWidth();
 
   return (
     <Stack
-      sx={theme => ({
+      sx={(theme) => ({
         default: {
           flexGrow: 1,
           padding: '26px',
@@ -17,14 +17,14 @@ export function LayoutPrivate() {
           overflowX: 'hidden',
           height: 'fit-content',
           minHeight: '-webkit-fill-available',
-          borderWidth: screenActual !== 'mobile' ? '2px 0px 0px 2px' : '2px 0px 0px 0px'
+          borderWidth: screenActual !== 'mobile' ? '2px 0px 0px 2px' : '2px 0px 0px 0px',
         },
         mobile: {
-          padding: '14px'
-        }
+          padding: '14px',
+        },
       })}
     >
       <Outlet />
     </Stack>
-  )
+  );
 }
