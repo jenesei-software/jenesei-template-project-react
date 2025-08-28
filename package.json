@@ -9,7 +9,8 @@
     "build:prod": "tsc && vite build --mode prod",
     "build:dev": "tsc && vite build --mode dev",
     "biome:lint": "biome lint .",
-    "biome:format": "biome format --write ."
+    "biome:format": "biome format --write .",
+    "changelog": "conventional-changelog -p eslint -i CHANGELOG.md -s -r 0"
   },
   "dependencies": {
     "@emotion/styled": "^11.14.0",
