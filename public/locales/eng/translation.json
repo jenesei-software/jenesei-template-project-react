@@ -5,6 +5,11 @@
       "/pu/home": "pu - home"
     }
   },
+  "boundary": {
+    "title-1": "An unknown error occurred",
+    "title-2": "Please try again later",
+    "title-button": "Reload page"
+  },
   "meta": {
     "description": "eng, meta - description"
   },

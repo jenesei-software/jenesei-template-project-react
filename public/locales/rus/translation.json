@@ -5,6 +5,11 @@
       "/pu/home": "pu - home"
     }
   },
+  "boundary": {
+    "title-1": "Произошла неизвестная ошибка",
+    "title-2": "Пожалуйста, попробуйте позже",
+    "title-button": "Перезагрузить страницу"
+  },
   "meta": {
     "description": "rus, meta - description"
   },
