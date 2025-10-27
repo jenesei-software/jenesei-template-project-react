@@ -12,7 +12,7 @@ import process from 'node:process';
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
   const VITE_DEFAULT_NAME = env.VITE_DEFAULT_NAME;
-  const VITE_DEFAULT_SHORTNAME = env.VITE_DEFAULT_SHORTNAME;
+  const VITE_DEFAULT_NAMESHORT = env.VITE_DEFAULT_NAMESHORT;
   const VITE_DEFAULT_THEME_COLOR = env.VITE_DEFAULT_THEME_COLOR;
   const VITE_DEFAULT_DESCRIPTION = env.VITE_DEFAULT_DESCRIPTION;
 
@@ -88,7 +88,7 @@ export default defineConfig(({ mode }) => {
         template: 'index.html',
         inject: {
           data: {
-            title: VITE_DEFAULT_SHORTNAME,
+            title: VITE_DEFAULT_NAMESHORT,
             robotsMeta: robotsMode[mode]?.meta,
             icon57: `icons/icon-57x57.png`,
             icon72: `icons/icon-72x72.png`,
@@ -119,7 +119,7 @@ export default defineConfig(({ mode }) => {
           display: 'standalone',
           orientation: 'portrait',
           name: VITE_DEFAULT_NAME,
-          short_name: VITE_DEFAULT_SHORTNAME,
+          short_name: VITE_DEFAULT_NAMESHORT,
           theme_color: VITE_DEFAULT_THEME_COLOR,
           background_color: VITE_DEFAULT_THEME_COLOR,
           description: VITE_DEFAULT_DESCRIPTION,
