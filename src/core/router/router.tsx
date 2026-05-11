@@ -8,7 +8,7 @@ import { PagePublicHome } from '@local/pages/public/home';
 import { QueryClient } from '@tanstack/react-query';
 import { createRootRouteWithContext, createRoute, createRouter, Navigate, redirect } from '@tanstack/react-router';
 
-import { validateLayoutRouteRootSearch } from '.';
+import { validateLayoutRouteRootSearch } from './router.search';
 
 export interface IContext {
   queryClient: QueryClient;

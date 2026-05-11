@@ -1,15 +1,18 @@
 import { QueryClient } from '@tanstack/react-query';
 
+import { env } from '../envs';
+import { logger } from '../logger';
+
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
-      staleTime: 60000,
+      staleTime: +env.queryStaleTime,
     },
     mutations: {
       onError: (error) => {
         if (error) {
-          console.error('Log. queryClient, error:', error.response?.data);
+          logger.error('queryClient, error:', error.response?.data);
         }
       },
     },

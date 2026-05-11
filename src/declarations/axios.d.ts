@@ -1,5 +1,5 @@
-import { AxiosResponseDto } from '@jenesei-software/jenesei-id-web-api';
 import 'axios';
+import { AxiosResponseDto } from '@local/core/types';
 
 declare module 'axios' {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

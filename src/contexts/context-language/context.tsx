@@ -1,26 +1,33 @@
 import { browserLng, fallbackLng, supportedLngs } from '@local/core/i18n';
 
-import { ILanguageKeys } from '@jenesei-software/jenesei-kit-react/types';
-import { createContext, FC, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { I18nextProvider, useTranslation } from 'react-i18next';
+import { createContext, useContextSelector } from 'use-context-selector';
 
-import { LanguageContextProps, ProviderLanguageProps } from '.';
+import { ILanguageContext, ILanguageProvider, IUseLanguageDependencies } from './context.types';
 
-const LanguageContext = createContext<LanguageContextProps | null>(null);
+const LanguageContext = createContext<ILanguageContext | null>(null);
 
-export const useLanguage = () => {
-  const context = useContext(LanguageContext);
+export const useLanguage = (props: IUseLanguageDependencies): ILanguageContext => {
+  const context = useContextSelector(LanguageContext, (v) => {
+    return v
+      ? props.reduce((acc, prop) => {
+          acc[prop] = v[prop];
+          return acc;
+        }, {} as any)
+      : null;
+  });
   if (!context) {
     throw new Error('useLanguage must be used within an ProviderLanguage');
   }
   return context;
 };
 
-export const ProviderLanguage: FC<ProviderLanguageProps> = (props) => {
+export const ProviderLanguage: FC<ILanguageProvider> = (props) => {
   const { i18n } = useTranslation();
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const changeLng: LanguageContextProps['changeLng'] = useCallback(
+  const changeLng: ILanguageContext['changeLng'] = useCallback(
     (lng) => {
       setIsLoading(true);
       i18n
@@ -38,7 +45,7 @@ export const ProviderLanguage: FC<ProviderLanguageProps> = (props) => {
     [i18n],
   );
 
-  const lng = useMemo(() => i18n.language as ILanguageKeys, [i18n.language]);
+  const lng = useMemo(() => i18n.language as ILanguageContext['lng'], [i18n.language]);
   const localFallbackLng = useMemo(() => fallbackLng, []);
   const localSupportedLngs = useMemo(() => supportedLngs, []);
   const localBrowserLng = useMemo(() => browserLng, []);

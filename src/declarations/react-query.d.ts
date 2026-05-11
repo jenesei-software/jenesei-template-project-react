@@ -1,6 +1,6 @@
-import '@jenesei-software/jenesei-id-web-api';
-import { AxiosResponseDto } from '@jenesei-software/jenesei-id-web-api';
 import '@tanstack/react-query';
+import { AxiosResponseDto } from '@local/core/types';
+
 import { AxiosError } from 'axios';
 
 declare module '@tanstack/react-query' {

@@ -1,9 +1,10 @@
-import { ILanguageKeys } from '@jenesei-software/jenesei-kit-react/types';
+import { ILanguageKeys } from '@local/core/types';
+
 import { PropsWithChildren } from 'react';
 
-export type ProviderLanguageProps = PropsWithChildren;
+export type ILanguageProvider = PropsWithChildren;
 
-export interface LanguageContextProps {
+export interface ILanguageContext {
   browserLng: string;
 
   changeLng: (lng: ILanguageKeys) => void;
@@ -18,3 +19,5 @@ export interface LanguageContextProps {
 
   supportedLngs: ILanguageKeys[];
 }
+
+export type IUseLanguageDependencies = (keyof ILanguageContext)[];

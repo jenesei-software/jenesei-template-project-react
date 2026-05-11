@@ -1,16 +1,16 @@
-import { KeysLanguage } from '@jenesei-software/jenesei-kit-react/consts';
-import { ILanguageKeys } from '@jenesei-software/jenesei-kit-react/types';
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import Backend from 'i18next-chained-backend';
 import HttpApi from 'i18next-http-backend';
 import { initReactI18next } from 'react-i18next';
 
-import translation from '../../../public/locales/rus/translation.json';
+import translation from '../../../public/locales/ru/translation.json';
+import { OBJECT_LANGUAGE } from '../consts';
+import { ILanguageKeys } from '../types';
 
 export const defaultNS: INameSpace = 'translation';
-export const fallbackLng = KeysLanguage.eng as ILanguageKeys;
-export const supportedLngs = Object.values(KeysLanguage) as ILanguageKeys[];
+export const fallbackLng = OBJECT_LANGUAGE.en.value as ILanguageKeys;
+export const supportedLngs = Object.values(OBJECT_LANGUAGE).map(lang => lang.value) as ILanguageKeys[];
 export const browserLng = navigator.language.split('-')[0];
 
 export type INameSpace = 'translation';

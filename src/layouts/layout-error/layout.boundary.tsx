@@ -1,8 +1,9 @@
-import { Stack } from '@jenesei-software/jenesei-kit-react/component-stack';
+import { logger } from '@local/core/logger';
+
 import { Typography } from '@jenesei-software/jenesei-kit-react/component-typography';
 import React, { Component } from 'react';
 
-import { LayoutErrorBoundaryProps, LayoutErrorBoundaryState, LayoutErrorWrapper } from '.';
+import { LayoutErrorBoundaryProps, LayoutErrorBoundaryState } from './layout.types';
 
 export class LayoutErrorBoundary extends Component<LayoutErrorBoundaryProps, LayoutErrorBoundaryState> {
   constructor(props: LayoutErrorBoundaryProps) {
@@ -15,31 +16,44 @@ export class LayoutErrorBoundary extends Component<LayoutErrorBoundaryProps, Lay
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error('ErrorBoundary caught an error', error, errorInfo);
+    logger.error('ErrorBoundary caught an error', error, errorInfo);
   }
 
   render() {
     if (this.state.hasError) {
       return (
-        <LayoutErrorWrapper>
-          <Stack
-            sx={{
-              default: {
-                gap: '12px',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-              },
+        <div
+          style={{
+            backgroundColor: 'white',
+            position: 'fixed',
+            left: 0,
+            top: 0,
+            zIndex: 9999,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            maxWidth: '100%',
+            width: '100%',
+            height: '100vh',
+            overflow: 'hidden',
+            gap: '16px',
+          }}
+        >
+          <div
+            style={{
+              gap: '12px',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
             <Typography
               sx={{
-                default: {
-                  variant: 'h6',
-                  align: 'center',
-                  weight: 700,
-                  color: 'black60',
-                },
+                variant: 'sub-headline',
+                align: 'center',
+                weight: '700',
+                color: 'textPrimaryLight',
               }}
             >
               An unknown error occurred.
@@ -49,19 +63,17 @@ export class LayoutErrorBoundary extends Component<LayoutErrorBoundaryProps, Lay
             {this?.state?.error?.message && (
               <Typography
                 sx={{
-                  default: {
-                    variant: 'h8',
-                    align: 'center',
-                    weight: 700,
-                    color: 'black100',
-                  },
+                  variant: 'sub-headline',
+                  align: 'center',
+                  weight: '700',
+                  color: 'textPrimaryLight',
                 }}
               >
                 {this?.state?.error?.message}
               </Typography>
             )}
-          </Stack>
-        </LayoutErrorWrapper>
+          </div>
+        </div>
       );
     }
 

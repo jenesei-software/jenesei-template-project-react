@@ -1,29 +1,44 @@
+import { usePWA } from '@local/contexts/context-pwa';
 import { ProviderValidation } from '@local/contexts/context-validation';
+import { env } from '@local/core/envs';
+import { tableString } from '@local/core/functions';
+import { logger } from '@local/core/logger';
 import { LayoutRoutePrivate, LayoutRoutePublic } from '@local/core/router';
-import { useEnvironment } from '@local/hooks/use-environment';
 
-import { ProviderApp, useApp } from '@jenesei-software/jenesei-kit-react/context-app';
-import { useScreenWidth } from '@jenesei-software/jenesei-kit-react/context-screen-width';
-import { ProviderSonner } from '@jenesei-software/jenesei-kit-react/context-sonner';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { Outlet, useMatches, useNavigate, useRouterState } from '@tanstack/react-router';
+import { Outlet, useMatches, useNavigate } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 
 export function LayoutRoot() {
-  const env = useEnvironment();
+  const pwa = usePWA([
+    'status',
+    'isEnabled',
+    'isSupported',
+    'isInitialized',
+    'isRegistered',
+    'isOfflineReady',
+    'isUpdateAvailable',
+    'isNeedRefresh',
+    'newVersion',
+    'currentVersion',
+    'registrationScope',
+    'error',
+  ]);
 
   useEffect(() => {
-    console.table(env);
-  }, [env]);
+    logger.info(tableString(env));
+  }, []);
+  useEffect(() => {
+    logger.info(tableString(pwa));
+  }, [pwa]);
 
   return (
     <>
       <ProviderValidation>
         <LayoutRootComponent />
       </ProviderValidation>
-      {env.mode === 'test' && (
+      {env.mode === 'stage' && (
         <>
           <ReactQueryDevtools buttonPosition='bottom-left' />
           <TanStackRouterDevtools position='bottom-right' />
@@ -34,15 +49,8 @@ export function LayoutRoot() {
 }
 
 const LayoutRootComponent = () => {
-  const { nameShort } = useEnvironment();
-  const { t } = useTranslation('translation');
-  // const { isLoading, isSuccess, isFetched } = useAuthProfile();
-  // const isAuthenticated = useMemo(() => (isFetched ? isSuccess : undefined), [isFetched, isSuccess]);
-
-  // const visible = useMemo(() => !!isLoading, [isLoading]);
   const isAuthenticated = useMemo(() => false, []);
 
-  const visible = useMemo(() => true, []);
   const navigate = useNavigate();
 
   const isMatchPrivate = useMatches({
@@ -66,87 +74,17 @@ const LayoutRootComponent = () => {
     }
   }, [isAuthenticated, isMatchPrivate, isMatchPublic, navigate]);
 
-  const { screenActual } = useScreenWidth();
-  return (
-    <ProviderSonner
-      gap={12}
-      position={screenActual === 'mobile' ? 'bottom-center' : 'bottom-right'}
-      visibleToasts={3}
-      zIndex={100}
-      default={{
-        genre: 'black',
-        button: {
-          content: t('sonner.undo'),
-        },
-      }}
-    >
-      <ProviderApp
-        defaultPreview={{ visible: visible, defaultVisible: false }}
-        defaultTitle={nameShort}
-        defaultDescription={t('meta.description')}
-        isScrollOutlet={true}
-        defaultBgColor='whiteStandard'
-        defaultStatusBarColor='whiteStandard'
-        // leftAside={{
-        //   component: <LeftAside />,
-        //   isTopFooter: true,
-        //   isTopNav: true,
-        //   length: {
-        //     default: isMatchPrivate ? '420px' : '50dvw',
-        //     tablet: isMatchPrivate ? '96px' : null,
-        //     mobile: null,
-        //   },
-        // }}
-        // footer={{
-        //   component: <Footer />,
-        //   length: {
-        //     default: null,
-        //     tablet: null,
-        //     mobile: isMatchPrivate ? '95px' : null,
-        //   },
-        // }}
-        // nav={{
-        //   component: <Nav />,
-        //   length: {
-        //     default: isMatchPrivate ? '68px' : null,
-        //     tablet: isMatchPrivate ? '68px' : null,
-        //     mobile: isMatchPrivate ? '40px' : null,
-        //   },
-        // }}
-        // header={{
-        //   zIndex: 1,
-        //   component: <Header />,
-        //   length: {
-        //     default: isMatchPrivate ? null : null,
-        //     tablet: isMatchPrivate ? null : '170px',
-        //     mobile: isMatchPrivate ? null : '170px',
-        //   },
-        // }}
-        main={{
-          zIndex: 0,
-        }}
-      >
-        <LayoutURLComponent />
-      </ProviderApp>
-    </ProviderSonner>
-  );
-};
-const LayoutURLComponent = () => {
-  const { nameShort } = useEnvironment();
-  const { t: tURLTitle } = useTranslation('translation', { keyPrefix: 'url.title' });
-  const fullPath = useRouterState({
-    select: (state) => state.location.pathname.replace(/\/$/, ''),
-  });
-  const { changeTitle } = useApp();
+  const pwa = usePWA(['updateApp', 'resetAppCache', 'isUpdateAvailable']);
 
-  useEffect(() => {
-    const titleTranslate = tURLTitle(fullPath, { defaultValue: '__MISSING__' });
-    const exists = titleTranslate !== '__MISSING__';
-    if (exists) {
-      changeTitle(titleTranslate);
-    } else {
-      changeTitle(nameShort);
-    }
-  }, [changeTitle, nameShort, fullPath, tURLTitle]);
-  return <Outlet />;
+  return (
+    <div>
+      <Outlet />
+      <button disabled={!pwa.isUpdateAvailable} type='button' onClick={pwa.updateApp}>
+        Update App
+      </button>
+      <button type='button' onClick={pwa.resetAppCache}>
+        Reset App Cache
+      </button>
+    </div>
+  );
 };

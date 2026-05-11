@@ -1,1 +1,1 @@
-export * from './layout';
+export { LayoutPrivate } from './layout';
