@@ -10,7 +10,7 @@ import { ILanguageKeys } from '../types';
 
 export const defaultNS: INameSpace = 'translation';
 export const fallbackLng = OBJECT_LANGUAGE.en.value as ILanguageKeys;
-export const supportedLngs = Object.values(OBJECT_LANGUAGE).map(lang => lang.value) as ILanguageKeys[];
+export const supportedLngs = Object.values(OBJECT_LANGUAGE).map((lang) => lang.value) as ILanguageKeys[];
 export const browserLng = navigator.language.split('-')[0];
 
 export type INameSpace = 'translation';

@@ -6,55 +6,53 @@ export const tableString = (
     sortKeys?: boolean;
   } = {},
 ): string => {
-  const {
-    indent = 2,
-    fallback = '[Unserializable]',
-    sortKeys = false,
-  } = options;
+  const { indent = 2, fallback = '[Unserializable]', sortKeys = false } = options;
 
   const seen = new WeakSet<object>();
 
   const safeStringify = (input: unknown): string => {
     try {
-      return JSON.stringify(
-        input,
-        (_key, val: unknown) => {
-          if (typeof val === 'bigint') {
-            return val.toString();
-          }
-
-          if (typeof val === 'function') {
-            return `[Function${val.name ? `: ${val.name}` : ''}]`;
-          }
-
-          if (typeof val === 'symbol') {
-            return val.toString();
-          }
-
-          if (val instanceof Error) {
-            return {
-              name: val.name,
-              message: val.message,
-              stack: val.stack,
-            };
-          }
-
-          if (val instanceof Date) {
-            return val.toISOString();
-          }
-
-          if (typeof val === 'object' && val !== null) {
-            if (seen.has(val)) {
-              return '[Circular]';
+      return (
+        JSON.stringify(
+          input,
+          (_key, val: unknown) => {
+            if (typeof val === 'bigint') {
+              return val.toString();
             }
 
-            seen.add(val);
-          }
+            if (typeof val === 'function') {
+              return `[Function${val.name ? `: ${val.name}` : ''}]`;
+            }
 
-          return val;
-        },
-        indent,
-      ) ?? String(input);
+            if (typeof val === 'symbol') {
+              return val.toString();
+            }
+
+            if (val instanceof Error) {
+              return {
+                name: val.name,
+                message: val.message,
+                stack: val.stack,
+              };
+            }
+
+            if (val instanceof Date) {
+              return val.toISOString();
+            }
+
+            if (typeof val === 'object' && val !== null) {
+              if (seen.has(val)) {
+                return '[Circular]';
+              }
+
+              seen.add(val);
+            }
+
+            return val;
+          },
+          indent,
+        ) ?? String(input)
+      );
     } catch {
       return fallback;
     }
@@ -69,13 +67,9 @@ export const tableString = (
 
   const entries = Object.entries(value);
 
-  const normalizedEntries = sortKeys
-    ? entries.sort(([a], [b]) => a.localeCompare(b))
-    : entries;
+  const normalizedEntries = sortKeys ? entries.sort(([a], [b]) => a.localeCompare(b)) : entries;
 
-  return normalizedEntries
-    .map(([key, val]) => `${key}: ${safeStringify(val)}`)
-    .join('\n');
+  return normalizedEntries.map(([key, val]) => `${key}: ${safeStringify(val)}`).join('\n');
 };
 type GenericObject<T> = {
   [key: string]: T;
