@@ -8,5 +8,3 @@ export interface AxiosResponseDto {
   message?: string;
   error?: string[];
 }
-export type IThemeBreakpoint = 'tablet' | 'mobile';
-export type IThemeOrientation = 'landscape' | 'portrait';

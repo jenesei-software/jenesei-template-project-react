@@ -16,15 +16,4 @@ export const OBJECT_LANGUAGE: ILanguage = {
   },
 };
 
-export const SCREEN = {
-  breakpoint: {
-    tablet: '1290px',
-    mobile: '850px',
-  },
-  orientation: {
-    landscape: 'landscape',
-    portrait: 'portrait',
-  },
-} as const;
-
 export const LIST_LANGUAGE = transformObjectToArray(OBJECT_LANGUAGE);
