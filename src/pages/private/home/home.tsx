@@ -5,16 +5,16 @@ import { Stack } from '@jenesei-software/jenesei-kit-react/component-stack';
 import { useTranslation } from 'react-i18next';
 
 export function PagePrivateHome() {
-  const { changeLng, lng } = useLanguage();
+  const { changeLng, lng } = useLanguage(['changeLng', 'lng']);
   const { t } = useTranslation('translation');
 
   return (
     <Stack>
       Private Home. Current lng: {lng} {t('meta.description')}
-      <Button onClick={() => changeLng('rus')} genre='greenTransparent' size='medium'>
+      <Button onClick={() => changeLng('ru')} genre='green' size='medium'>
         Ru
       </Button>
-      <Button onClick={() => changeLng('eng')} genre='greenTransparent' size='medium'>
+      <Button onClick={() => changeLng('en')} genre='green' size='medium'>
         En
       </Button>
     </Stack>
