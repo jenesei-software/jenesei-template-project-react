@@ -1,4 +1,4 @@
-import { generateManifestIcons, pluginUpdateIcons } from '@jenesei-software/jenesei-plugin-vite';
+import { generateManifestIcons, pluginUpdateIcons, pluginWriteBuildInfo } from '@jenesei-software/jenesei-plugin-vite';
 import react from '@vitejs/plugin-react';
 import { defineConfig, loadEnv } from 'vite';
 import { createHtmlPlugin } from 'vite-plugin-html';
@@ -16,6 +16,8 @@ export default defineConfig(({ mode }) => {
   const VITE_DEFAULT_THEME_COLOR = env.VITE_DEFAULT_THEME_COLOR;
   const VITE_DEFAULT_DESCRIPTION = env.VITE_DEFAULT_DESCRIPTION;
   const VITE_BASE_URL = env.VITE_BASE_URL;
+  const VITE_APP_VERSION = env.VITE_APP_VERSION || 'unknown';
+  const VITE_OUTPUT_DIR = env.VITE_OUTPUT_DIR || 'build';
 
   const robotsMode = {
     prod: {
@@ -37,6 +39,7 @@ export default defineConfig(({ mode }) => {
   const sizesBackgroundWhite: never[] = [];
   const sizesFavicon = [64];
 
+  const buildInfoPath = path.resolve(__dirname, VITE_OUTPUT_DIR, 'build-info.txt');
   return {
     server: {
       host: true,
@@ -139,6 +142,11 @@ export default defineConfig(({ mode }) => {
             sizesFavicon: sizesFavicon,
           }),
         },
+      }),
+      pluginWriteBuildInfo({
+        pathBuildInfo: buildInfoPath,
+        version: VITE_APP_VERSION,
+        mode,
       }),
     ],
   };
