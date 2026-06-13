@@ -187,7 +187,7 @@ Important behavior:
 - The app can detect offline readiness.
 - The app can detect available updates.
 - The app can reset service worker cache and reload from a clean state.
-- New app versions are read from `build-info.txt` under the configured public base path when an update is available.
+- New app versions are read from `build-info.txt` under the configured public base path with a cache-busting request when an update is available.
 
 ## Icons and Manifest
 
