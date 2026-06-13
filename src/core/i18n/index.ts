@@ -1,3 +1,5 @@
+import { env } from '@local/core/envs';
+
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import Backend from 'i18next-chained-backend';
@@ -29,7 +31,7 @@ i18n
       backendOptions: [
         {
           prefix: 'i18next_res_',
-          loadPath: '/locales/{{lng}}/{{ns}}.json',
+          loadPath: `${env.basePath}locales/{{lng}}/{{ns}}.json`,
         },
       ],
     },

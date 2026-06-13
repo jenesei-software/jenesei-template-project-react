@@ -4,6 +4,7 @@ const name = import.meta.env.VITE_DEFAULT_NAME;
 const nameShort = import.meta.env.VITE_DEFAULT_NAME_SHORT;
 const themeColor = import.meta.env.VITE_DEFAULT_THEME_COLOR;
 const mode = import.meta.env.VITE_NODE_ENV;
+const basePath = import.meta.env.BASE_URL;
 const baseURL = import.meta.env.VITE_BASE_URL;
 const coreURL = import.meta.env.VITE_CORE_URL;
 const socketURL = import.meta.env.VITE_SOCKET_URL;
@@ -17,6 +18,7 @@ export const env = {
   nameShort,
   themeColor,
   mode,
+  basePath,
   baseURL,
   coreURL,
   socketURL,
