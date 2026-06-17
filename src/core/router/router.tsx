@@ -9,7 +9,7 @@ import { PagePublicHome } from '@local/pages/public/home';
 import { QueryClient } from '@tanstack/react-query';
 import { createRootRouteWithContext, createRoute, createRouter, Navigate, redirect } from '@tanstack/react-router';
 
-import { validateLayoutRouteRootSearch } from './router.search';
+import { validateILayoutRouteRootSearch } from './router.search';
 
 export interface IContext {
   queryClient: QueryClient;
@@ -17,7 +17,7 @@ export interface IContext {
 
 export const LayoutRouteRoot = createRootRouteWithContext<IContext>()({
   component: LayoutRoot,
-  validateSearch: validateLayoutRouteRootSearch,
+  validateSearch: validateILayoutRouteRootSearch,
   errorComponent: LayoutErrorRouter,
   notFoundComponent: () => <Navigate to={LayoutRoutePublic.fullPath} />,
 });

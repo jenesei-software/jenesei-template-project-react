@@ -3,7 +3,7 @@ export type ILanguage = Record<
   ILanguageKeys,
   { value: ILanguageKeys; label: string; placeholder: string; search: string }
 >;
-export interface AxiosResponseDto {
+export interface IAxiosResponseDto {
   statusCode?: number;
   status?: string | number;
   message?: string | string[];

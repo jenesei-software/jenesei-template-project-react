@@ -1,8 +1,8 @@
-export type LayoutRouteRootSearch = {};
-export const validateLayoutRouteRootSearch = (
-  search: Record<keyof LayoutRouteRootSearch, unknown>,
-): LayoutRouteRootSearch => {
-  const searchParams: LayoutRouteRootSearch = search;
+export type ILayoutRouteRootSearch = {};
+export const validateILayoutRouteRootSearch = (
+  search: Record<keyof ILayoutRouteRootSearch, unknown>,
+): ILayoutRouteRootSearch => {
+  const searchParams: ILayoutRouteRootSearch = search;
 
   return searchParams;
 };
