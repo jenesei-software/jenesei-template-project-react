@@ -5,6 +5,7 @@ export type ILanguage = Record<
 >;
 export interface AxiosResponseDto {
   statusCode?: number;
-  message?: string;
-  error?: string[];
+  status?: string | number;
+  message?: string | string[];
+  error?: string | string[];
 }

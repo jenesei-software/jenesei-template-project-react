@@ -1,7 +1,7 @@
-import { QueryClient } from '@tanstack/react-query';
+import { env } from '@local/core/envs';
+import { logger } from '@local/core/logger';
 
-import { env } from '../envs';
-import { logger } from '../logger';
+import { QueryClient } from '@tanstack/react-query';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
