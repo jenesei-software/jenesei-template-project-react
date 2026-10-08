@@ -1,7 +1,7 @@
 {
   "name": "jenesei-template-project-react",
   "private": true,
-  "version": "0.0.2",
+  "version": "0.0.3",
   "type": "module",
   "scripts": {
     "check": "biome check src && tsc --noEmit",
