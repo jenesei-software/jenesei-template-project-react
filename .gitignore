@@ -30,3 +30,8 @@ dev-dist/*
 /dev-dist
 /dist
 stats.html
+
+# Real env files. Values live in the deployment platform, see .env.template.
+.env
+.env.*
+!.env.template

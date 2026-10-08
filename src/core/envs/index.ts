@@ -1,5 +1,5 @@
 const description = import.meta.env.VITE_DEFAULT_DESCRIPTION;
-const version = import.meta.env.VITE_APP_VERSION;
+const version = __APP_VERSION__;
 const name = import.meta.env.VITE_DEFAULT_NAME;
 const nameShort = import.meta.env.VITE_DEFAULT_NAME_SHORT;
 const themeColor = import.meta.env.VITE_DEFAULT_THEME_COLOR;

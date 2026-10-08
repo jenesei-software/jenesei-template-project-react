@@ -38,7 +38,7 @@ export function LayoutRoot() {
       <ProviderValidation>
         <LayoutRootComponent />
       </ProviderValidation>
-      {env.mode === 'stage' && (
+      {env.mode === 'test' && (
         <>
           <ReactQueryDevtools buttonPosition='bottom-left' />
           <TanStackRouterDevtools position='bottom-right' />

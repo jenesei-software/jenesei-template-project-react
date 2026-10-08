@@ -4,19 +4,14 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
+    "check": "biome check src && tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "start": "vite",
+    "build": "tsc && vite build",
     "biome:lint": "biome lint src",
-    "biome:lint:check": "biome lint src",
     "biome:format": "biome format --write src",
-    "biome:format:check": "biome format src",
     "changelog": "conventional-changelog -p eslint -i CHANGELOG.md -s -r 0",
-    "bundle-visualizer": "npx vite-bundle-visualizer",
-    "start": "vite --mode dev",
-    "start:stage": "vite --mode stage",
-    "start:prod": "vite --mode prod",
-    "start:dev": "vite --mode dev",
-    "build:stage": "tsc && vite build --mode stage",
-    "build:prod": "tsc && vite build --mode prod",
-    "build:dev": "tsc && vite build --mode dev"
+    "bundle-visualizer": "npx vite-bundle-visualizer"
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.8",
@@ -52,7 +47,6 @@
     "vite": "^8.0.0",
     "vite-plugin-bundle-analyzer": "^0.0.1",
     "vite-plugin-html": "^3.2.2",
-    "vite-plugin-pwa": "^1.3.0",
-    "vite-plugin-static-copy": "^4.1.0"
+    "vite-plugin-pwa": "^1.3.0"
   }
 }

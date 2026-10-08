@@ -3,40 +3,41 @@ import react from '@vitejs/plugin-react';
 import { defineConfig, loadEnv } from 'vite';
 import { createHtmlPlugin } from 'vite-plugin-html';
 import { VitePWA } from 'vite-plugin-pwa';
-import { viteStaticCopy } from 'vite-plugin-static-copy';
 
+import { createRequire } from 'node:module';
 import path from 'node:path';
 import process from 'node:process';
 
-export default defineConfig(({ command, mode }) => {
-  const env = loadEnv(mode, process.cwd());
+export default defineConfig(({ command }) => {
+  const env = loadEnv('', process.cwd());
+
+  const require = createRequire(import.meta.url);
+  const pkg = require('./package.json') as { version: string };
+  const VITE_APP_VERSION = pkg.version;
 
   const VITE_DEFAULT_NAME = env.VITE_DEFAULT_NAME;
   const VITE_DEFAULT_NAME_SHORT = env.VITE_DEFAULT_NAME_SHORT;
   const VITE_DEFAULT_THEME_COLOR = env.VITE_DEFAULT_THEME_COLOR;
   const VITE_DEFAULT_DESCRIPTION = env.VITE_DEFAULT_DESCRIPTION;
   const VITE_API_URL = env.VITE_API_URL;
-  const VITE_APP_VERSION = env.VITE_APP_VERSION || 'unknown';
   const VITE_OUTPUT_DIR = env.VITE_OUTPUT_DIR || 'build';
   const VITE_BASE_PATH = env.VITE_BASE_PATH || '/';
   const publicBasePath = VITE_BASE_PATH.endsWith('/') ? VITE_BASE_PATH : `${VITE_BASE_PATH}/`;
   const htmlPublicBasePath = command === 'serve' ? '/' : publicBasePath;
 
-  const robotsMode = {
-    prod: {
-      txt: 'robots/robots.prod.txt',
-      meta: 'index, follow',
-    },
-    dev: {
-      txt: 'robots/robots.dev.txt',
-      meta: 'noindex, nofollow',
-    },
-    stage: {
-      txt: 'robots/robots.stage.txt',
-      meta: 'noindex, nofollow',
-    },
+const environmentValue = env.VITE_NODE_ENV ?? "prod";
+  if (!["prod", "dev", "test"].includes(environmentValue)) {
+    throw new Error(
+      `VITE_NODE_ENV must be one of prod, dev, test. Got: ${environmentValue}`,
+    );
+  }
+  const environment = environmentValue as "prod" | "dev" | "test";
+  const robotsMeta = {
+    prod: 'index, follow',
+    dev: 'noindex, nofollow',
+    test: 'noindex, nofollow',
   };
-  const robotsConfig = robotsMode[mode as keyof typeof robotsMode] ?? robotsMode.dev;
+  const robotsMetaContent = robotsMeta[environment];
 
   const sizesBackgroundTransparent = [57, 64, 72, 76, 114, 120, 144, 152, 180, 192, 256, 384, 512];
   const sizesBackgroundWhite: never[] = [];
@@ -45,6 +46,9 @@ export default defineConfig(({ command, mode }) => {
   const buildInfoPath = path.resolve(__dirname, VITE_OUTPUT_DIR, 'build-info.txt');
   return {
     base: publicBasePath,
+    define: {
+      __APP_VERSION__: JSON.stringify(pkg.version),
+    },
     server: {
       host: true,
       port: env.VITE_PORT ? parseInt(env.VITE_PORT, 10) : 3000,
@@ -66,15 +70,6 @@ export default defineConfig(({ command, mode }) => {
         sizesBackgroundWhite: sizesBackgroundWhite,
         sizesFavicon: sizesFavicon,
       }),
-      viteStaticCopy({
-        targets: [
-          {
-            src: robotsConfig.txt,
-            dest: '',
-            rename: 'robots.txt',
-          },
-        ],
-      }),
       createHtmlPlugin({
         minify: true,
         entry: 'src/main.tsx',
@@ -82,7 +77,7 @@ export default defineConfig(({ command, mode }) => {
         inject: {
           data: {
             title: VITE_DEFAULT_NAME_SHORT,
-            robotsMeta: robotsConfig.meta,
+            robotsMeta: robotsMetaContent,
             icon57: `${htmlPublicBasePath}icons/icon-57x57.png`,
             icon72: `${htmlPublicBasePath}icons/icon-72x72.png`,
             icon76: `${htmlPublicBasePath}icons/icon-76x76.png`,
@@ -151,7 +146,7 @@ export default defineConfig(({ command, mode }) => {
       pluginWriteBuildInfo({
         pathBuildInfo: buildInfoPath,
         version: VITE_APP_VERSION,
-        mode,
+        mode: environment,
       }),
     ],
   };

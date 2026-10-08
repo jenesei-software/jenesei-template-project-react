@@ -9,13 +9,16 @@ interface ImportMetaEnv {
   readonly VITE_API_SOCKET_URL: string;
   readonly VITE_AVAILABILITY_COOKIE_NAME: string;
   readonly VITE_CORE_URL: string;
-  readonly VITE_NODE_ENV: 'dev' | 'prod' | 'stage';
+  readonly VITE_NODE_ENV: 'dev' | 'prod' | 'test';
   readonly VITE_QUERY_STALE_TIME: string;
 }
 
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+/** Replaced at build time from package.json by vite.config.ts. */
+declare const __APP_VERSION__: string;
 
 declare module 'virtual:pwa-register' {
   export type RegisterSWOptions = {
