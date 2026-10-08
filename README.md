@@ -49,31 +49,24 @@ By default, Vite starts on port `3000`. The port can be changed with `VITE_PORT`
 
 | Command | Description |
 | --- | --- |
-| `yarn start` | Start Vite in `dev` mode. |
-| `yarn start:dev` | Start Vite in `dev` mode. |
-| `yarn start:stage` | Start Vite in `stage` mode. |
-| `yarn start:prod` | Start Vite in `prod` mode. |
-| `yarn build:dev` | Type-check and build in `dev` mode. |
-| `yarn build:stage` | Type-check and build in `stage` mode. |
-| `yarn build:prod` | Type-check and build in `prod` mode. |
+| `yarn start` | Start the Vite dev server. |
+| `yarn build` | Type-check, then build into `VITE_OUTPUT_DIR`. |
+| `yarn check` | Run the same checks as the release pipeline: Biome then `tsc`. |
+| `yarn typecheck` | Type-check only. |
 | `yarn biome:lint` | Run Biome lint. |
-| `yarn biome:lint:check` | Check lint rules without fixes. |
 | `yarn biome:format` | Format source files with Biome. |
-| `yarn biome:format:check` | Check formatting without writing changes. |
-| `yarn changelog` | Update `CHANGELOG.md` from conventional commits. |
 | `yarn bundle-visualizer` | Open the Vite bundle visualizer. |
+
+There are no per-environment scripts. The environment comes from `VITE_NODE_ENV`,
+not from a `--mode` flag, so one build script serves every environment.
 
 ## Environment
 
-The project uses Vite modes and `VITE_*` environment variables.
+The project uses `VITE_*` variables. Values live in the deployment platform, not in
+the repository, so the same commit produces a different bundle per environment.
 
-Mode-specific files currently present:
-
-- `.env.dev`
-- `.env.prod`
-- `.env.stage`
-
-Base variables are defined in `.env`.
+Required keys are listed in `.env.template`. No other env file is committed. Copy the
+template to `.env.local` for local work.
 
 | Variable | Purpose |
 | --- | --- |
@@ -86,13 +79,18 @@ Base variables are defined in `.env`.
 | `VITE_API_SOCKET_URL` | WebSocket URL. |
 | `VITE_CORE_URL` | Core domain value used by the app. |
 | `VITE_AVAILABILITY_COOKIE_NAME` | Cookie name used for auth availability checks. |
-| `VITE_NODE_ENV` | Runtime environment name used by application code. |
+| `VITE_NODE_ENV` | One of `prod`, `dev`, `test`. Controls the robots meta. |
 | `VITE_QUERY_STALE_TIME` | Default TanStack Query stale time in milliseconds. |
 | `VITE_BUILD_INFO_EXPIRATION_TIME` | Build info expiration value used by environment configuration. |
-| `VITE_CACHE_VERSION_MAX_AGE_SECONDS` | Optional max age for the service worker build-info cache. |
 | `VITE_PORT` | Local Vite dev server port. |
 | `VITE_OUTPUT_DIR` | Build output directory. |
-| `VITE_APP_VERSION` | Application version exposed to the PWA service worker flow. |
+
+`VITE_NODE_ENV` must be one of the three values above. Anything else fails the build
+on purpose.
+
+The application version is not an env variable. Vite reads `version` from
+`package.json` and exposes it to the bundle as `__APP_VERSION__`, so it always matches
+the released version.
 
 ## Project Structure
 
@@ -126,7 +124,7 @@ public/locales/en/translation.json
 public/locales/ru/translation.json
 ```
 
-Robots files are stored in `robots/`.
+Robots is a single file at `public/robots.txt`.
 
 ## Routing
 
@@ -209,17 +207,25 @@ The generated icons are used in both `index.html` and the PWA manifest.
 
 ## Robots
 
-`viteStaticCopy` copies the mode-specific robots file to `robots.txt` during build.
+`public/robots.txt` is a single static file and is copied as is. It allows
+everything:
 
-Configured modes:
+```text
+User-agent: *
+Allow: /
+```
 
-| Mode | Source file | Meta robots |
-| --- | --- | --- |
-| `dev` | `robots/robots.dev.txt` | `noindex, nofollow` |
-| `stage` | `robots/robots.stage.txt` | `noindex, nofollow` |
-| `prod` | `robots/robots.prod.txt` | `index, follow` |
+Indexing is controlled per environment by the `<meta name="robots">` tag that Vite
+injects from `VITE_NODE_ENV`:
 
-Make sure every build mode has a matching robots file before using it in CI/CD.
+| `VITE_NODE_ENV` | Meta robots |
+| --- | --- |
+| `prod` | `index, follow` |
+| `dev` | `noindex, nofollow` |
+| `test` | `noindex, nofollow` |
+
+Keep the meta robots in sync with the environment you deploy, otherwise a `dev` build
+can end up indexable.
 
 ## Code Style
 
@@ -239,25 +245,23 @@ Before opening a pull request, run:
 
 ```bash
 yarn biome:format
-yarn biome:lint:check
-yarn build:dev
+yarn check
 ```
 
 ## Build
 
-Create a production build:
+Create a build:
 
 ```bash
-yarn build:prod
+yarn build
 ```
 
 The output directory is controlled by `VITE_OUTPUT_DIR` and defaults to `build`.
 
 ## Deployment Notes
 
-- Provide all required `VITE_*` variables for the selected mode.
-- Ensure `robots.txt` behavior matches the target environment.
-- Ensure `VITE_APP_VERSION` is updated by the release process.
+- Provide all required `VITE_*` variables for the selected environment.
+- Ensure the injected robots meta matches the target environment.
 - Publish or generate `/build-info.txt` if the PWA update prompt should display the new version.
 - Serve the built app as a single page application with fallback to `index.html`.
 
@@ -265,7 +269,7 @@ The output directory is controlled by `VITE_OUTPUT_DIR` and defaults to `build`.
 
 If the app starts on an unexpected port, check `VITE_PORT`.
 
-If a build fails while copying `robots.txt`, verify that the selected Vite mode has a matching file in `robots/`.
+If the app is indexable but should not be, check that `VITE_NODE_ENV` is one of the three allowed values and that the injected robots meta matches it.
 
 If PWA updates do not appear locally, remember that service worker registration is enabled only for `prod` mode.
 
