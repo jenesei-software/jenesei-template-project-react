@@ -10,7 +10,6 @@
     "build": "tsc && vite build",
     "biome:lint": "biome lint src",
     "biome:format": "biome format --write src",
-    "changelog": "conventional-changelog -p eslint -i CHANGELOG.md -s -r 0",
     "bundle-visualizer": "npx vite-bundle-visualizer"
   },
   "dependencies": {
